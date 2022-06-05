@@ -3,6 +3,7 @@
 #' @usage
 #' library(atRfunctions)
 #' missing_translation(data, KEY)
+#'
 #' @param data dataframe
 #' @param KEY unique identifier. Default value is "KEY"
 #' @import tidyr
