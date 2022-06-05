@@ -1,3 +1,6 @@
+only_me.R
+.DS_Store
+
 # History files
 .Rhistory
 .Rapp.history
