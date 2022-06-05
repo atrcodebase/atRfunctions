@@ -30,7 +30,7 @@ mtcars_v2$wt[mtcars_v2$wt > 100] <- 105
 mtcars_v2$cyl[mtcars_v2$cyl == 8] <- 7
 mtcars_v2 <- mtcars_v2[1:30, ]
 
-compare_dt(df1 = mtcars1, df2 = mtcars2,
+compare_dt(df1 = mtcars_v1, df2 = mtcars_v2,
           unique_id_df1 = "id",
           unique_id_df2 = "id"
 )
