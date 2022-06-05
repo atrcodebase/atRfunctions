@@ -44,7 +44,7 @@ compare_dt(df1, df2, unique_id_df1, unique_id_df2)
 
 ```r
 library(atRfunctions)
-compare_dt(data, KEY)
+missing_translation(data, KEY)
 ```
 
 **arguments:**
