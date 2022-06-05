@@ -4,7 +4,8 @@
 \alias{missing_translation}
 \title{Generate translation log}
 \usage{
-missing_translation(data, KEY = "KEY")
+library(atRfunctions)
+missing_translation(data, KEY)
 }
 \arguments{
 \item{data}{dataframe}
@@ -12,7 +13,5 @@ missing_translation(data, KEY = "KEY")
 \item{KEY}{unique identifier. Default value is "KEY"}
 }
 \description{
-#' @usage
-library(atRfunctions)
-missing_translation(data, KEY)
+Generate translation log
 }

@@ -1,6 +1,6 @@
 #' Generate translation log
 #'
-#'#' @usage
+#' @usage
 #' library(atRfunctions)
 #' missing_translation(data, KEY)
 #' @param data dataframe
