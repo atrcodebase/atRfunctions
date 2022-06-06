@@ -51,7 +51,7 @@ missing_translation(data, KEY)
 
   `data` data frame
   
-  `KEY` Unique identifier. The efault value is "KEY"
+  `KEY` Unique identifier. The default value is "KEY"
 
 
 #### apply_log()
