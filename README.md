@@ -29,9 +29,9 @@ compare_dt(df1, df2, unique_id_df1, unique_id_df2)
 
 **arguments:**
 
-  `df1` Old version of the dataset
+  `df1` old version of the dataset
 
-  `df2` Latest version of the dataset
+  `df2` latest version of the dataset
 
   `unique_id_df1` unique identifier in df1
 
@@ -51,15 +51,34 @@ missing_translation(data, KEY)
 
   `data` data frame
   
-  `KEY` Unique identifier. The default value is "KEY"
+  `KEY` unique identifier. The default value is "KEY"
 
 
 #### apply_log()
 
 **usage:**
 
+```r
+library(atRfunctions)
+apply_log(data, log,
+          data_KEY = "KEY",
+          log_columns = c(question = "question",
+                          old_value = "old_value",
+                          new_value = "new_value",
+                          KEY = "KEY"
+                           )
+          )
+```
+
 **arguments:**
 
+  `data` data set
+
+  `log`	the log file
+
+  `date_KEY` the Unique identifier in data set. Must be same as the KEY in log file
+
+  `log_column` column names in log file
   
 #### analyze()
 
@@ -71,8 +90,26 @@ missing_translation(data, KEY)
 
 **usage:**
 
+```r
+library(atRfunctions)
+labeler(data, tool,
+        survey_label = "label:English",
+        choice_lable = "label:English",
+        multi_response_sep = ";"
+        )
+```
+
 **arguments:**
 
+  `data` data set
+
+  `tool` the path to the SurveyCTO data collection tool
+
+  `survey_label` column name for the question labels in 'survey' sheet of the SurveyCTO data collection tool. The default value is 'label:English'
+
+  `choice_lable` column name for value label in 'choices' sheet of the SurveyCTO data collection tool. The default value is 'label:English'
+
+  `multi_response_sep` separator for the multi-select questions. The default value is ';'
 
 ***
 ##### Author: ATR - Data Management Team

@@ -2,7 +2,9 @@
 
 export(apply_log)
 export(compare_dt)
+export(labeler)
 export(missing_translation)
 import(dplyr)
+import(readxl)
 import(stringr)
 import(tidyr)
