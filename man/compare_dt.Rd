@@ -5,16 +5,18 @@
 \title{Compare data frames}
 \usage{
 library(atRfunctions)
-compare_dt(df1, df2, unique_id_df1, unique_id_df2)
+compare_dt(df1, df2, unique_id_df1, unique_id_df2, compare_all = TRUE)
 }
 \arguments{
-\item{df1}{Old version of the dataset}
+\item{df1}{old version of the dataset}
 
-\item{df2}{Latest version of the dataset}
+\item{df2}{latest version of the dataset}
 
 \item{unique_id_df1}{unique identifier in df1}
 
 \item{unique_id_df2}{unique identifier in df2}
+
+\item{compare_all}{logical. TRUE: compare all columns/variables. FALSE: compare only shared columns/variables.}
 }
 \description{
 The \code{compare_dt()} function compares two versions of the same data
@@ -29,9 +31,17 @@ mtcars_v2$am[mtcars_v2$am == 1] <- 2
 mtcars_v2$wt[mtcars_v2$wt > 100] <- 105
 mtcars_v2$cyl[mtcars_v2$cyl == 8] <- 7
 mtcars_v2 <- mtcars_v2[1:30, ]
+mtcars_v2$row_n <- 1:nrow(mtcars_v2)
 
 compare_dt(df1 = mtcars_v1, df2 = mtcars_v2,
           unique_id_df1 = "id",
-          unique_id_df2 = "id"
+          unique_id_df2 = "id",
+          compare_all = FALSE
+)
+
+compare_dt(df1 = mtcars_v1, df2 = mtcars_v2,
+          unique_id_df1 = "id",
+          unique_id_df2 = "id",
+          compare_all = TRUE
 )
 }

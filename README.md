@@ -36,6 +36,8 @@ compare_dt(df1, df2, unique_id_df1, unique_id_df2)
   `unique_id_df1` unique identifier in df1
 
   `unique_id_df2` unique identifier in df2
+  
+  `compare_all` logical. `TRUE`: compare all columns/variables. `FALSE`: compare only shared columns/variables.
 
 
 #### missing_translation()
