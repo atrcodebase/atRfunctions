@@ -24,7 +24,7 @@ This package includes the following functions.
 
 ```r
 library(atRfunctions)
-compare_dt(df1, df2, unique_id_df1, unique_id_df2)
+compare_dt(df1, df2, unique_id_df1, unique_id_df2, compare_all = TRUE)
 ```
 
 **arguments:**
@@ -46,7 +46,7 @@ compare_dt(df1, df2, unique_id_df1, unique_id_df2)
 
 ```r
 library(atRfunctions)
-missing_translation(data, KEY)
+missing_translation(data, KEY = "KEY")
 ```
 
 **arguments:**
