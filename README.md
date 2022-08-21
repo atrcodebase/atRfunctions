@@ -18,6 +18,58 @@ install_github("atrcodebase/atRfunctions")
 ## Functions
 This package includes the following functions.
 
+#### concat_url()
+
+**usage:**
+
+```r
+library(atRfunctions)
+concat_url(data,
+          tool,
+          server_name = "https://atrconsultingaf.surveycto.com",
+          KEY = KEY,
+          question_types = c("audio audit", "text audit", "audio", "image")
+          )
+```
+
+**arguments:**
+
+  `data` the dataset/dataframe
+
+  `tool` the path to the SurveyCTO data collection tool
+
+  `server_name` link to the SurveyCTO server
+
+  `KEY` the unique identifier column name - UUID
+
+  `question_types` a string vector of question types which the url should be concatenate.
+  Defualt value c("audio audit", "text audit", "audio", "image")
+  
+#### labeler()
+
+**usage:**
+
+```r
+library(atRfunctions)
+labeler(data, tool,
+        survey_label = "label:English",
+        choice_lable = "label:English",
+        multi_response_sep = ";"
+        )
+```
+
+**arguments:**
+
+  `data` data set
+
+  `tool` the path to the SurveyCTO data collection tool
+
+  `survey_label` column name for the question labels in 'survey' sheet of the SurveyCTO data collection tool. The default value is 'label:English'
+
+  `choice_lable` column name for value label in 'choices' sheet of the SurveyCTO data collection tool. The default value is 'label:English'
+
+  `multi_response_sep` separator for the multi-select questions. The default value is ';'
+  
 #### compare_dt()
 
 **usage:**
@@ -87,31 +139,6 @@ apply_log(data, log,
 **usage:**
 
 **arguments:**
-
-#### labeler()
-
-**usage:**
-
-```r
-library(atRfunctions)
-labeler(data, tool,
-        survey_label = "label:English",
-        choice_lable = "label:English",
-        multi_response_sep = ";"
-        )
-```
-
-**arguments:**
-
-  `data` data set
-
-  `tool` the path to the SurveyCTO data collection tool
-
-  `survey_label` column name for the question labels in 'survey' sheet of the SurveyCTO data collection tool. The default value is 'label:English'
-
-  `choice_lable` column name for value label in 'choices' sheet of the SurveyCTO data collection tool. The default value is 'label:English'
-
-  `multi_response_sep` separator for the multi-select questions. The default value is ';'
 
 ***
 ##### Author: ATR - Data Management Team

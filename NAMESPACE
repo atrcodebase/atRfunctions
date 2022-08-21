@@ -2,6 +2,7 @@
 
 export(apply_log)
 export(compare_dt)
+export(concat_url)
 export(labeler)
 export(missing_translation)
 import(dplyr)
