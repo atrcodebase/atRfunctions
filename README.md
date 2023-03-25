@@ -146,11 +146,12 @@ update_series_cols(data,
 ```
 
 **arguments:**
+
   `data` data set
 
   `multi_vars` a vector of multi-select questions
 
-  `question_separator` the default value is '/'. The separator for multi-select columns in SurveyCTO is '_'
+  `question_separator` the default value is '/'
 
 ***
 ##### Author: ATR - Data Management Team
