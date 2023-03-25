@@ -43,7 +43,7 @@ concat_url(data,
   `KEY` the unique identifier column name - UUID
 
   `question_types` a string vector of question types which the url should be concatenate.
-  Defualt value c("audio audit", "text audit", "audio", "image")
+  Defualt values are: c("audio audit", "text audit", "audio", "image")
   
 #### labeler()
 
@@ -134,11 +134,23 @@ apply_log(data, log,
 
   `log_column` column names in log file
   
-#### analyze()
+#### update_series_cols()
 
 **usage:**
 
+```r
+library(atRfunctions)
+update_series_cols(data,
+                   multi_vars,
+                   question_separator = "/")
+```
+
 **arguments:**
+  `data` data set
+
+  `multi_vars` a vector of multi-select questions
+
+  `question_separator` the default value is '/'. The separator for multi-select columns in SurveyCTO is '_'
 
 ***
 ##### Author: ATR - Data Management Team
