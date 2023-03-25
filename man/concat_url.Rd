@@ -21,7 +21,7 @@ concat_url(
 
 \item{KEY}{the unique identifier column name - UUID}
 
-\item{question_types}{a string vector of question types which the url should be concatenate. Defualt value c("audio audit", "text audit", "audio", "image")}
+\item{question_types}{a string vector of question types which the url should be concatenated. Defualt values are: c("audio audit", "text audit", "audio", "image")}
 }
 \description{
 The \code{concat_url()} function concatenates the url for image and audio questions

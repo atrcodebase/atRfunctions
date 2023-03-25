@@ -6,7 +6,7 @@
 #' @param tool link to SCTO tool
 #' @param server_name the server name
 #' @param KEY the unique identifier column name - UUID
-#' @param question_types a string vector of question types which the url should be concatenate. Defualt value c("audio audit", "text audit", "audio", "image")
+#' @param question_types a string vector of question types which the url should be concatenated. Defualt values are: c("audio audit", "text audit", "audio", "image")
 
 #' @import readxl
 #' @import dplyr
