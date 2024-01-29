@@ -12,4 +12,6 @@ Imports:
     dplyr,
     readxl,
     stringr,
-    tidyr
+    tidyr,
+    purrr,
+    openxlsx
