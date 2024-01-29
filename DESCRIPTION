@@ -1,6 +1,6 @@
 Package: atRfunctions
 Title: wrap-up ATR's custom functions
-Version: 0.0.1.0
+Version: 0.0.1.1
 Authors@R: 
     person("ATR", "Data Management Team", , "datamanagement.atr@gmail.com", role = c("aut", "cre"))
 Description: This package aims to wrap-up the custom functions that we use most frequently
