@@ -2,7 +2,7 @@
 % Please edit documentation in R/labeler.R
 \name{labeler}
 \alias{labeler}
-\title{Label SurveyCTO Dataset}
+\title{Label Data set}
 \usage{
 library(atRfunctions)
 labeler(data, tool,
@@ -14,14 +14,14 @@ labeler(data, tool,
 \arguments{
 \item{data}{data set}
 
-\item{tool}{the path to the SurveyCTO data collection tool}
+\item{tool}{the path to the data collection tool}
 
-\item{survey_label}{column name for the question labels in 'survey' sheet of the SurveyCTO data collection tool. The default value is 'label:English'}
+\item{survey_label}{column name for the question labels in 'survey' sheet of the data collection tool. The default value is 'label:English'}
 
-\item{choice_lable}{column name for value labels in 'choices' sheet of the SurveyCTO data collection tool. The default value is 'label:English'}
+\item{choice_lable}{column name for value labels in 'choices' sheet of the data collection tool. The default value is 'label:English'}
 
-\item{multi_response_sep}{separator for the multi-select questions. The default value is ';'}
+\item{multi_response_sep}{separator for the multiple select questions. The default value is ';'}
 }
 \description{
-Attach value labels to single-select and multi-select questions
+Attach value labels to single-select and multiple select questions
 }
