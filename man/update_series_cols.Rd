@@ -6,36 +6,16 @@
 \usage{
 library(atRfunctions)
 update_series_cols(data,
-                   multi_vars,
+                   tool_survey,
                    question_separator = "/")
 }
 \arguments{
 \item{data}{dataframe}
 
-\item{multi_vars}{a vector of multi-select questions}
+\item{tool_survey}{The survey sheet of data collection tool}
 
-\item{question_separator}{default value is '/'}
+\item{question_separator}{default value is '_'}
 }
 \description{
 This function updates the 'select_multiple' series column values (0s,1s) based on responses in the main question.
-We need this because sometimes the values of select_multiple questions are updated in correction log but the series columns are not.
-}
-\examples{
-library(atRfunctions)
-
-dt <- data.frame(
-     q1 = c("A", "A; B", "B; A", "B; C", "A; C"),
-     q1_A = c(0, 0     , 0      , 0    , 0),
-     q1_B = c(0, 0     , 0      , 0    , 0),
-     q1_C = c(0, 0     , 0      , 0    , 0),
-     q2 = c("option_A", "option_A; option_B", "option_B; option_A", "option_B; option_C", "option_A; option_C"),
-     "q2_option_A" = c(1, 1     , 1      , 1    , 1),
-     "q2_option_B" = c(1, 1     , 1      , 1    , 1),
-     "q2_option_C" = c(1, 1     , 1      , 1    , 1)
-     )
-
-update_series_cols(dt,
-                   multi_vars = c("q1", "q2"),
-                   question_separator = "_")
-
 }
