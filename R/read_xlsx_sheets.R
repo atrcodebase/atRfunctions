@@ -15,6 +15,7 @@
 #' @return A list of data set where each item represent XLSX's sheet
 #' @import map2
 #' @import readxl
+#' @import openxlsx
 #' @export
 read_xlsx_sheets = function(path, guess_max = 5000000, convert_to_na = c("N/A", "-", " ")){
   df <- map2(path, getSheetNames(path), ~ read_excel(.x, sheet = .y, guess_max=guess_max, na=convert_to_na, .name_repair = "minimal"), .progress = TRUE) |> setNames(getSheetNames(path))
