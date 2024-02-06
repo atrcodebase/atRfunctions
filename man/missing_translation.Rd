@@ -5,12 +5,14 @@
 \title{Generate translation log}
 \usage{
 library(atRfunctions)
-missing_translation(data, KEY)
+missing_translation(data, KEY, excluded_cols)
 }
 \arguments{
 \item{data}{dataframe}
 
-\item{KEY}{unique identifier. Default value is "KEY"}
+\item{KEY}{unique identifier; Default value is "KEY"}
+
+\item{excluded_cols}{list of columns to be ignored}
 }
 \description{
 Generate translation log
