@@ -9,6 +9,9 @@ process_group_relevancies(kobo_tool)
 \arguments{
 \item{kobo_tool}{The data collection tool}
 }
+\value{
+The list of questions and its group name involved
+}
 \description{
 Set the relevancy defined for groups on the questions inside
 }

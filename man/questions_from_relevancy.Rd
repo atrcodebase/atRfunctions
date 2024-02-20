@@ -9,6 +9,9 @@ questions_from_relevancy(relevancy_string)
 \arguments{
 \item{relevancy_string}{The relevancy formula for which the list of question is needed}
 }
+\value{
+The list of questions involved in the relevancy formula
+}
 \description{
 Extract question list from relevancy rule defined
 }

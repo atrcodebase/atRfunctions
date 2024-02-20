@@ -2,7 +2,7 @@
 #'
 #' @param kobo_tool The data collection tool
 #'
-#' @return
+#' @return The list of R statements converted from Relevancy Formulas
 #' @import stringr
 #'
 #' @export

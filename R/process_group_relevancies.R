@@ -2,7 +2,7 @@
 #'
 #' @param kobo_tool The data collection tool
 #'
-#' @return
+#' @return The list of questions and its group name involved
 #' @export
 process_group_relevancies <- function(kobo_tool){
   begin_group_relevancies <- c()

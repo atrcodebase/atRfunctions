@@ -2,7 +2,7 @@
 #'
 #' @param kobo_tool the kobo tool for which the question's sheet needed
 #'
-#' @return
+#' @return The list of questions and its sheet name
 #' @export
 add_repeat_sheet_names_to_questions <- function(kobo_tool){
   kobo_tool <- kobo_tool %>% filter(!is.na(type) & type != "")

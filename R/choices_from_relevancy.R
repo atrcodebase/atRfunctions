@@ -2,7 +2,7 @@
 #'
 #' @param relevancy_string The relevancy formula for which the list of choices is needed
 #'
-#' @return
+#' @return The list of choices involved in the relevancy formula
 #' @export
 choices_from_relevancy <- function(relevancy_string) {
   choices <- gsub(" (and|or) ", " - ", relevancy_string)

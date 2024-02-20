@@ -9,6 +9,9 @@ convert_relevancy_to_R(kobo_tool)
 \arguments{
 \item{kobo_tool}{The data collection tool}
 }
+\value{
+The list of R statements converted from Relevancy Formulas
+}
 \description{
 Converts the relevancy rules to R statements
 }

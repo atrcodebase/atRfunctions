@@ -2,7 +2,7 @@
 #'
 #' @param relevancy_string The relevancy formula for which the list of question is needed
 #'
-#' @return
+#' @return The list of questions involved in the relevancy formula
 #' @export
 questions_from_relevancy = function(relevancy_string){
   # Extract question names from each element of the input vector

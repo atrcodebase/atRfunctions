@@ -7,7 +7,7 @@
 create_relevancy_file(kobo_tool, ignore_reverse_check = NULL)
 }
 \arguments{
-\item{kobo_tool}{The data collection tool}
+\item{kobo_tool}{The data collection tool's survey sheet}
 
 \item{ignore_reverse_check}{The list of question names to be ignored for reverse checking}
 }

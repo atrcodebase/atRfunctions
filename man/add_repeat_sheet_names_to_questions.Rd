@@ -9,6 +9,9 @@ add_repeat_sheet_names_to_questions(kobo_tool)
 \arguments{
 \item{kobo_tool}{the kobo tool for which the question's sheet needed}
 }
+\value{
+The list of questions and its sheet name
+}
 \description{
 Identify and set the sheets names for each question in Data collection tool
 }

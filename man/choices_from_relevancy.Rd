@@ -9,6 +9,9 @@ choices_from_relevancy(relevancy_string)
 \arguments{
 \item{relevancy_string}{The relevancy formula for which the list of choices is needed}
 }
+\value{
+The list of choices involved in the relevancy formula
+}
 \description{
 Extract choices list from relevancy rule defined
 }

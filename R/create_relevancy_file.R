@@ -6,7 +6,7 @@
 #'                       ignore_reverse_check = c("Q1","Q2","Q10")
 #'           )
 #'
-#' @param kobo_tool The data collection tool
+#' @param kobo_tool The data collection tool's survey sheet
 #' @param ignore_reverse_check The list of question names to be ignored for reverse checking
 #'
 #' @return The input for check_relevancy_rules.R function
@@ -48,7 +48,7 @@ create_relevancy_file <-  function(kobo_tool, ignore_reverse_check = NULL){
 
   # Start generating the relevancy file
   relevancy_file = data.frame(type = unlist(lapply(strsplit(kobo_tool$type, " "), function(x) x[1]))) # Type of question
-  relevancy_file$name = kobo_tool[, "name"] # Name of question
+  relevancy_file$name = kobo_tool[, "name"] |> unlist() |> unname() # Name of question
   relevancy_file$relevance_rule <- kobo_tool$relevant # Original Relevancy Rules
   relevancy_file$relevant_question <- questions_from_relevancy(relevancy_string = kobo_tool$relevant) # Extract only question names involved in Relevancy formula
   relevancy_file$relevant_value <- choices_from_relevancy(relevancy_string = kobo_tool$relevant) # Extract only values involved in Relevancy Formula
