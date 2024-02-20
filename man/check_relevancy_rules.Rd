@@ -10,7 +10,7 @@ check_relevancy_rules(data,
                              KEY = "KEY")
 }
 \arguments{
-\item{data}{The data set for which the relevancy would be checked}
+\item{data}{The data set for which the relevancy will be checked}
 
 \item{tool_relevancy}{The output of create_relevancy_file function, a file in which all the relevancy formulas are converted to what is understandable by R}
 

@@ -4,7 +4,7 @@
 #' However, the tool_relevancy parameter of the function is dependent to another function
 #' called create_relevancy_file by which the parameter can get the suitable input
 #'
-#' @param data The data set for which the relevancy would be checked
+#' @param data The data set for which the relevancy will be checked
 #' @param tool_relevancy The output of create_relevancy_file function, a file in which all the relevancy formulas are converted to what is understandable by R
 #' @param sheet_name The sheet name of data set in case it holds multiple sheets. Default value to "data"
 #' @param KEY The Unique ID of observations. Default value to "KEY"
