@@ -4,8 +4,8 @@
 #'
 #' @param df1 old version of the dataset
 #' @param df2 latest version of the dataset
-#' @param unique_id_df1 unique identifier in df1
-#' @param unique_id_df2 unique identifier in df2
+#' @param unique_id_df1 unique identifier in df1, defaults to KEY
+#' @param unique_id_df2 unique identifier in df2, defaults to KEY
 #' @param compare_all logical. TRUE: compare all columns/variables. FALSE: compare only shared columns/variables.
 #' @examples
 #' library(atRfunctions)
@@ -38,7 +38,7 @@
 #' @import dplyr
 #' @import stringr
 #' @export
-compare_dt <- function(df1, df2, unique_id_df1, unique_id_df2, compare_all = TRUE) {
+compare_dt <- function(df1, df2, unique_id_df1 = "KEY", unique_id_df2 = "KEY", compare_all = TRUE) {
 
   if(compare_all == FALSE) {
     df1 <- df1[, colnames(df1) %in% colnames(df2)]
