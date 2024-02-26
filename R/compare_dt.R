@@ -91,6 +91,7 @@ compare_dt <- function(df1, df2, unique_id_df1, unique_id_df2, compare_all = TRU
 
   if(nrow(diff) == 0) {
     paste0("No difference in df1 and df2")
+    return(diff)
   } else {
     return(diff)
   }
