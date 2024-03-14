@@ -48,7 +48,8 @@ apply_log <- function (data, log,
           if (var_i %in% colnames(data)) {
             var_type <- class(data[[var_i]])
             # check data type and apply log
-            if(any(var_type %in% c("POSIXct", "POSIXt")) & is.na(new_i)){
+            # if(any(var_type %in% c("POSIXct", "POSIXt")) & is.na(new_i)){
+            if(any(var_type %in% c("POSIXct", "POSIXt"))){
               data[data[[data_KEY]] %in% uuid_i, var_i] <- as.Date(new_i)
             } else if (var_type %in% "character") {
               data[data[[data_KEY]] %in% uuid_i, var_i] <- as.character(new_i)
