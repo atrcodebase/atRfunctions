@@ -1,0 +1,28 @@
+# Column-level configuration for {{project_name}}.
+
+# Columns dropped from BOTH the analyst and client outputs.
+# Typical SCTO / Kobo metadata that downstream analysts rarely need.
+drop_columns:
+  - start
+  - end
+  - deviceid
+  - meta/instanceID
+  - SubmissionDate
+
+# Additional columns dropped only from the CLIENT output (PII).
+pii_columns:
+  - respondent_name
+  - phone
+  - gps_lat
+  - gps_lon
+  - village
+
+# Labels for columns that are NOT present in the XLSForm - typically
+# variables calculated during the cleaning pipeline (e.g. `age_bracket`,
+# `is_eligible`).
+#
+# Keys are the column names; values are the human-readable labels. Labels
+# are sanitized into valid R names by `apply_column_labels()`.
+custom_labels:
+  # age_bracket: "Age bracket"
+  # is_eligible: "Is eligible for follow-up?"

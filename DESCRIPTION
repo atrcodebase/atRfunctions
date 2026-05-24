@@ -1,6 +1,6 @@
 Package: atRfunctions
 Title: wrap-up ATR's custom functions
-Version: 0.0.6
+Version: 0.0.7
 Authors@R:
     person("ATR", "Data Management Team", , "datamanagement.atr@gmail.com", role = c("aut", "cre"))
 Description: Wraps the custom functions used most frequently by the ATR
@@ -19,5 +19,6 @@ Imports:
     openxlsx
 Suggests:
     testthat (>= 3.0.0),
-    writexl
+    writexl,
+    yaml
 Config/testthat/edition: 3

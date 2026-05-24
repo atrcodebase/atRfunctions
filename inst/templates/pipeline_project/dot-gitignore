@@ -1,0 +1,18 @@
+# targets cache
+_targets/
+
+# Secrets and credentials - never commit these
+.Renviron
+.secrets/
+
+# R session detritus
+.Rhistory
+.RData
+.Rproj.user/
+
+# Generated outputs - regenerable from raw inputs + pipeline
+output/
+
+# Raw data - usually delivered out-of-band and too large for git
+input/data/*
+!input/data/.gitkeep

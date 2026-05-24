@@ -1,0 +1,31 @@
+# Sensitive log URLs. Copy this file to `.Renviron` and fill in the values.
+#
+# Two URL flavors are supported, dispatched automatically by read_log():
+#
+#   1. Publish-to-Web CSV (no auth):
+#        https://docs.google.com/spreadsheets/d/e/<ID>/pub?output=csv
+#      Use these for logs that are OK to share publicly via the
+#      "Publish to the web" sharing option.
+#
+#   2. Private Google Sheet (auth):
+#        https://docs.google.com/spreadsheets/d/<ID>/edit
+#      Use these for logs that must stay private. Run once:
+#        googlesheets4::gs4_auth(cache = ".secrets")
+#      to cache an OAuth token that subsequent pipeline runs reuse.
+#
+# `_GID` is the numeric `gid` of the specific sheet/tab within the workbook.
+
+ATRP_QA_LOG_URL=
+ATRP_QA_LOG_GID=
+
+ATRP_CORRECTION_LOG_URL=
+ATRP_CORRECTION_LOG_GID=
+
+ATRP_DETAILED_CHECK_URL=
+ATRP_DETAILED_CHECK_GID=
+
+ATRP_REJECTION_LOG_URL=
+ATRP_REJECTION_LOG_GID=
+
+ATRP_TRANSLATION_LOG_URL=
+ATRP_TRANSLATION_LOG_GID=

@@ -36,6 +36,25 @@ rules <- create_relevancy_file(xform)
 violations <- check_relevancy_rules(data, rules)
 ```
 
+## Project scaffold
+
+`scaffold_pipeline_project()` emits a [`targets`](https://docs.ropensci.org/targets/)-based
+project directory that chains the helpers above into a reproducible
+pipeline (load -> filter rejected -> apply cleaning + translation logs ->
+label values -> run checks -> write analyst / client / issues outputs).
+Logs that change externally (Google Sheets) are wired with
+`tar_cue(mode = "always")`.
+
+```r
+scaffold_pipeline_project("my-survey/")
+# Then: drop XLSForm(s) into tools/, fill in .Renviron, edit config/*.yml,
+# and run targets::tar_make().
+```
+
+See `?scaffold_pipeline_project` for the full layout. The scaffolded
+project depends on `targets`, `tarchetypes`, `yaml`, `readr`, `writexl`,
+and (optionally) `googlesheets4` for private sheet URLs.
+
 ## Kobo & SurveyCTO support
 
 Every XLSForm-aware function accepts the **tool** in three interchangeable

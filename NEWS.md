@@ -1,3 +1,30 @@
+# atRfunctions 0.0.7
+
+## New: `scaffold_pipeline_project()`
+
+A single function that emits a runnable [targets](https://docs.ropensci.org/targets/)-based survey data-processing project directory consuming the atRfunctions helpers in a sensible default order.
+
+```r
+scaffold_pipeline_project("my-survey/")
+# 1. Drop XLSForm(s) under tools/, raw CSV(s) under input/data/
+# 2. Edit config/project.yml and config/columns.yml
+# 3. cp .Renviron.example .Renviron and fill in log URLs
+# 4. targets::tar_make()
+```
+
+The scaffolded layout includes:
+
+- `_targets.R` chaining `read_xlsform()` -> `filter_rejected()` -> `apply_log()` (corrections + translations) -> `labeler()` -> `update_series_cols()` -> checks (`check_relevancy_rules`, `check_select_multiple`, `missing_translation`, `custom_checks`) -> `apply_column_labels()` -> three output flavors (analyst raw, analyst labeled, client de-identified) + one consolidated issues workbook.
+- `config/project.yml` for tools list, log toggles, env-var prefix.
+- `config/columns.yml` for `drop_columns`, `pii_columns`, `custom_labels`.
+- `.Renviron.example` with `ATRP_<LOG>_URL` / `_GID` slots for QA, correction, detailed_check, rejection, and translation logs.
+- `R/log_io.R` with a dispatcher that reads pub-CSV URLs via `readr::read_csv()` and private Google Sheets via `googlesheets4::read_sheet()`.
+- `R/custom_checks.R` stub for project-specific logic checks.
+
+Log targets carry `tar_cue(mode = "always")` when `always_refetch_logs: true` (default) in `project.yml`, because `targets` cannot otherwise tell that an external Google Sheet has changed.
+
+Templates ship under `inst/templates/pipeline_project/`. The scaffold function is the only new export; `targets`, `tarchetypes`, `yaml`, `readr`, `writexl`, and `googlesheets4` are *user-project* dependencies (installed by the project, not by atRfunctions).
+
 # atRfunctions 0.0.6
 
 ## New: `apply_column_labels()`

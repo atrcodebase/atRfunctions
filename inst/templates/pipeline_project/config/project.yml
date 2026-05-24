@@ -1,0 +1,42 @@
+# {{project_name}} - project configuration
+#
+# Edit the `tools:` list to register one entry per XLSForm + dataset.
+# Each entry produces a full set of outputs (clean, clean_labeled, client,
+# issues) under `output/`.
+
+project_name: "{{project_name}}"
+
+tools:
+  - short_name: main
+    xlsform: "tools/main.xlsx"
+    data:    "input/data/main.csv"
+  # Add more tools by uncommenting / extending the block below:
+  # - short_name: followup
+  #   xlsform: "tools/followup.xlsx"
+  #   data:    "input/data/followup.csv"
+
+# Logs to fetch on every pipeline run.
+#
+# Each entry maps to the env-vars `<log_env_prefix><NAME>_URL` and
+# `<log_env_prefix><NAME>_GID` (case-insensitive). Leave the env var unset to
+# get an empty data frame for that log without erroring out.
+logs:
+  - qa
+  - correction
+  - detailed_check
+  - rejection
+  - translation
+
+# Env-var prefix used to look up log URLs / GIDs. Change if your team uses a
+# different convention.
+log_env_prefix: "ATRP_"
+
+# When TRUE, log targets carry `tar_cue(mode = "always")` so they always
+# re-fetch from Google Sheets - because `targets` cannot otherwise tell
+# when an external sheet has changed.
+always_refetch_logs: true
+
+# Filter rejected interviews using the rejection log.
+rejection:
+  log: "rejection"   # name of the log (must appear in `logs:` above)
+  key: "KEY"         # join column name
