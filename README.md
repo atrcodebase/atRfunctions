@@ -47,8 +47,8 @@ Logs that change externally (Google Sheets) are wired with
 
 ```r
 scaffold_pipeline_project("my-survey/")
-# Then: drop XLSForm(s) into tools/, fill in .Renviron, edit config/*.yml,
-# and run targets::tar_make().
+# Then: drop XLSForm(s) into input/tools/, fill in .Renviron, edit
+# config/*.yml, and run targets::tar_make().
 ```
 
 See `?scaffold_pipeline_project` for the full layout. The scaffolded

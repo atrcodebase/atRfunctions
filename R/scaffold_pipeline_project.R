@@ -10,11 +10,11 @@
 #' - `R/log_io.R`, `R/stages.R`, `R/custom_checks.R` - helper functions.
 #' - `.Renviron.example` - template with `ATRP_<LOG>_URL` / `_GID` slots.
 #' - `.gitignore`, `README.md`, `<project_name>.Rproj`.
-#' - Empty `tools/`, `input/data/`, `output/{analyst,client,issues}/`.
+#' - Empty `input/tools/`, `input/data/`, `output/{analyst,client,issues}/`.
 #'
 #' Workflow after scaffolding:
 #'
-#' 1. Drop the XLSForm(s) under `tools/` and raw CSV(s) under `input/data/`.
+#' 1. Drop the XLSForm(s) under `input/tools/` and raw CSV(s) under `input/data/`.
 #' 2. Edit `config/project.yml` to point at them.
 #' 3. Copy `.Renviron.example` to `.Renviron` and fill in log URLs.
 #' 4. Run `targets::tar_make()`.
@@ -83,7 +83,7 @@ scaffold_pipeline_project <- function(path,
   # Create the directories that hold no template files (so the user has a
   # place to drop XLSForms / raw data and so `targets` finds the output
   # folders ready).
-  for (sub in c("tools", "input/data",
+  for (sub in c("input/tools", "input/data",
                 "output/analyst", "output/client", "output/issues")) {
     dir.create(file.path(path, sub), showWarnings = FALSE, recursive = TRUE)
   }
@@ -136,7 +136,7 @@ scaffold_pipeline_project <- function(path,
   message("")
   message("Next steps:")
   message(sprintf("  1. cd %s", path))
-  message("  2. Drop XLSForm(s) under tools/ and raw CSV(s) under input/data/")
+  message("  2. Drop XLSForm(s) under input/tools/ and raw CSV(s) under input/data/")
   message("  3. Edit config/project.yml and config/columns.yml")
   message("  4. cp .Renviron.example .Renviron   (and fill in log URLs)")
   message("  5. targets::tar_make()")

@@ -11,8 +11,9 @@ Orchestrated with [`targets`](https://docs.ropensci.org/targets/), using
 config/
   project.yml         # tools, logs, toggles
   columns.yml         # drop / pii / custom_labels
-tools/                # XLSForm files (one per tool)
-input/data/           # raw CSV inputs (one per tool)
+input/
+  tools/              # XLSForm files (one per tool)
+  data/               # raw CSV inputs (one per tool)
 R/
   log_io.R            # Google Sheets log reader (pub-CSV + googlesheets4)
   stages.R            # filter_rejected, drop_cols, build_client_version, ...
@@ -27,13 +28,13 @@ _targets.R            # pipeline definition
 
 ## Quick start
 
-1. **Drop your XLSForm(s)** under `tools/` and **raw CSV(s)** under
+1. **Drop your XLSForm(s)** under `input/tools/` and **raw CSV(s)** under
    `input/data/`. Each pair gets one entry in `config/project.yml`:
 
    ```yaml
    tools:
      - short_name: main
-       xlsform: "tools/main.xlsx"
+       xlsform: "input/tools/main.xlsx"
        data:    "input/data/main.csv"
    ```
 

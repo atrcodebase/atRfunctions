@@ -25,7 +25,7 @@ test_that("scaffold_pipeline_project writes the expected file tree", {
   }
 
   # Empty user-supplied directories
-  for (d in c("tools", "input/data",
+  for (d in c("input/tools", "input/data",
               "output/analyst", "output/client", "output/issues")) {
     expect_true(dir.exists(file.path(dest, d)), info = paste("missing dir:", d))
   }

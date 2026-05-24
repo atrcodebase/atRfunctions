@@ -8,11 +8,11 @@ project_name: "{{project_name}}"
 
 tools:
   - short_name: main
-    xlsform: "tools/main.xlsx"
+    xlsform: "input/tools/main.xlsx"
     data:    "input/data/main.csv"
   # Add more tools by uncommenting / extending the block below:
   # - short_name: followup
-  #   xlsform: "tools/followup.xlsx"
+  #   xlsform: "input/tools/followup.xlsx"
   #   data:    "input/data/followup.csv"
 
 # Logs to fetch on every pipeline run.

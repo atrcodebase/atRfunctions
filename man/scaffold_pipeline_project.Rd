@@ -32,12 +32,12 @@ The generated tree includes:
 \item \code{R/log_io.R}, \code{R/stages.R}, \code{R/custom_checks.R} - helper functions.
 \item \code{.Renviron.example} - template with \verb{ATRP_<LOG>_URL} / \verb{_GID} slots.
 \item \code{.gitignore}, \code{README.md}, \verb{<project_name>.Rproj}.
-\item Empty \verb{tools/}, \verb{input/data/}, \verb{output/\{analyst,client,issues\}/}.
+\item Empty \verb{input/tools/}, \verb{input/data/}, \verb{output/\{analyst,client,issues\}/}.
 }
 
 Workflow after scaffolding:
 \enumerate{
-\item Drop the XLSForm(s) under \verb{tools/} and raw CSV(s) under \verb{input/data/}.
+\item Drop the XLSForm(s) under \verb{input/tools/} and raw CSV(s) under \verb{input/data/}.
 \item Edit \code{config/project.yml} to point at them.
 \item Copy \code{.Renviron.example} to \code{.Renviron} and fill in log URLs.
 \item Run \code{targets::tar_make()}.
