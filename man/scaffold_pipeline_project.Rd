@@ -2,7 +2,7 @@
 % Please edit documentation in R/scaffold_pipeline_project.R
 \name{scaffold_pipeline_project}
 \alias{scaffold_pipeline_project}
-\title{Scaffold a new targets-based survey data-processing project}
+\title{Scaffold a survey data-processing project}
 \usage{
 scaffold_pipeline_project(path, project_name = NULL, overwrite = FALSE)
 }
@@ -20,14 +20,17 @@ colliding files.}
 The (normalized) path to the scaffolded project, invisibly.
 }
 \description{
-Emits a runnable project directory that consumes the \code{atRfunctions}
-helpers via a \href{https://docs.ropensci.org/targets/}{\code{targets}} pipeline.
-The generated tree includes:
+Emits a runnable project directory that processes a survey end-to-end by
+calling \code{atRfunctions} helpers in sequence. The entry point is a plain
+\code{run.R} script - no pipeline framework, no caching layer. Easy to read,
+easy to debug (drop \code{browser()} anywhere and \code{source("run.R")}), easy
+to hand off to a colleague.
 }
 \details{
+The generated tree includes:
 \itemize{
-\item \verb{_targets.R} - pipeline definition.
-\item \code{config/project.yml} - tools, logs, toggles.
+\item \code{run.R} - pipeline entry point.
+\item \code{config/project.yml} - tools list, logs list, rejection rule.
 \item \code{config/columns.yml} - drop / pii / custom_labels.
 \item \code{R/log_io.R}, \code{R/stages.R}, \code{R/custom_checks.R} - helper functions.
 \item \code{.Renviron.example} - template with \verb{ATRP_<LOG>_URL} / \verb{_GID} slots.
@@ -40,15 +43,14 @@ Workflow after scaffolding:
 \item Drop the XLSForm(s) under \verb{input/tools/} and raw CSV(s) under \verb{input/data/}.
 \item Edit \code{config/project.yml} to point at them.
 \item Copy \code{.Renviron.example} to \code{.Renviron} and fill in log URLs.
-\item Run \code{targets::tar_make()}.
+\item \code{source("run.R")}  (or \verb{Rscript run.R}).
 }
 }
 \section{Generated-project dependencies}{
 
 The scaffolded project (not \code{atRfunctions} itself) needs these packages
-installed before \code{tar_make()} runs:
+installed before \code{run.R} runs:
 \itemize{
-\item \code{targets}, \code{tarchetypes} - pipeline orchestration
 \item \code{yaml} - reading \verb{config/*.yml}
 \item \code{readr} - reading raw CSV inputs and pub-CSV log URLs
 \item \code{writexl} - writing the consolidated issues workbook
@@ -56,8 +58,7 @@ installed before \code{tar_make()} runs:
 \verb{/spreadsheets/d/<ID>/...} URL; not needed for pub-CSV URLs
 }
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{install.packages(c("targets", "tarchetypes", "yaml", "readr",
-                   "writexl", "googlesheets4"))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{install.packages(c("yaml", "readr", "writexl", "googlesheets4"))
 }\if{html}{\out{</div>}}
 }
 

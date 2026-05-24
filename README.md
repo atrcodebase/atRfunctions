@@ -38,22 +38,26 @@ violations <- check_relevancy_rules(data, rules)
 
 ## Project scaffold
 
-`scaffold_pipeline_project()` emits a [`targets`](https://docs.ropensci.org/targets/)-based
-project directory that chains the helpers above into a reproducible
-pipeline (load -> filter rejected -> apply cleaning + translation logs ->
-label values -> run checks -> write analyst / client / issues outputs).
-Logs that change externally (Google Sheets) are wired with
-`tar_cue(mode = "always")`.
+`scaffold_pipeline_project()` emits a self-contained project directory
+that processes a survey end-to-end by calling these helpers in sequence:
+load → filter rejected → apply cleaning + translation logs → label
+values → run checks → write analyst / client / issues outputs.
+
+The entry point is a plain `run.R` — no pipeline framework, no caching
+layer. Easy to read top-to-bottom, easy to debug (drop `browser()`
+anywhere and re-source), easy to hand off.
 
 ```r
 scaffold_pipeline_project("my-survey/")
 # Then: drop XLSForm(s) into input/tools/, fill in .Renviron, edit
-# config/*.yml, and run targets::tar_make().
+# config/*.yml, and:
+setwd("my-survey")
+source("run.R")
 ```
 
 See `?scaffold_pipeline_project` for the full layout. The scaffolded
-project depends on `targets`, `tarchetypes`, `yaml`, `readr`, `writexl`,
-and (optionally) `googlesheets4` for private sheet URLs.
+project depends on `yaml`, `readr`, `writexl`, and (optionally)
+`googlesheets4` for private sheet URLs.
 
 ## Kobo & SurveyCTO support
 

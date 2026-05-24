@@ -28,12 +28,12 @@ build_client_version <- function(analyst, xform, columns) {
   apply_column_labels(d, xform, custom_labels = columns$custom_labels)
 }
 
-# Write a data frame to CSV and return the path - the shape `targets` needs
-# for file targets. dir.create() is recursive so we don't error on first run.
-write_csv_target <- function(data, path) {
+# Write a data frame to CSV, creating the parent directory if needed.
+# Returns the path invisibly for piping.
+write_csv_safe <- function(data, path) {
   dir.create(dirname(path), showWarnings = FALSE, recursive = TRUE)
   readr::write_csv(data, path)
-  path
+  invisible(path)
 }
 
 # Write a named list of issue data frames to a multi-sheet xlsx. Empty

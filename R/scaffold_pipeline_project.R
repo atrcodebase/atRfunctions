@@ -1,11 +1,15 @@
-#' Scaffold a new targets-based survey data-processing project
+#' Scaffold a survey data-processing project
 #'
-#' Emits a runnable project directory that consumes the `atRfunctions`
-#' helpers via a [`targets`](https://docs.ropensci.org/targets/) pipeline.
+#' Emits a runnable project directory that processes a survey end-to-end by
+#' calling `atRfunctions` helpers in sequence. The entry point is a plain
+#' `run.R` script - no pipeline framework, no caching layer. Easy to read,
+#' easy to debug (drop `browser()` anywhere and `source("run.R")`), easy
+#' to hand off to a colleague.
+#'
 #' The generated tree includes:
 #'
-#' - `_targets.R` - pipeline definition.
-#' - `config/project.yml` - tools, logs, toggles.
+#' - `run.R` - pipeline entry point.
+#' - `config/project.yml` - tools list, logs list, rejection rule.
 #' - `config/columns.yml` - drop / pii / custom_labels.
 #' - `R/log_io.R`, `R/stages.R`, `R/custom_checks.R` - helper functions.
 #' - `.Renviron.example` - template with `ATRP_<LOG>_URL` / `_GID` slots.
@@ -17,13 +21,12 @@
 #' 1. Drop the XLSForm(s) under `input/tools/` and raw CSV(s) under `input/data/`.
 #' 2. Edit `config/project.yml` to point at them.
 #' 3. Copy `.Renviron.example` to `.Renviron` and fill in log URLs.
-#' 4. Run `targets::tar_make()`.
+#' 4. `source("run.R")`  (or `Rscript run.R`).
 #'
 #' @section Generated-project dependencies:
 #' The scaffolded project (not `atRfunctions` itself) needs these packages
-#' installed before `tar_make()` runs:
+#' installed before `run.R` runs:
 #' \itemize{
-#'   \item `targets`, `tarchetypes` - pipeline orchestration
 #'   \item `yaml` - reading `config/*.yml`
 #'   \item `readr` - reading raw CSV inputs and pub-CSV log URLs
 #'   \item `writexl` - writing the consolidated issues workbook
@@ -32,8 +35,7 @@
 #' }
 #'
 #' ```r
-#' install.packages(c("targets", "tarchetypes", "yaml", "readr",
-#'                    "writexl", "googlesheets4"))
+#' install.packages(c("yaml", "readr", "writexl", "googlesheets4"))
 #' ```
 #'
 #' @param path Destination directory. Created if it does not exist.
@@ -139,5 +141,5 @@ scaffold_pipeline_project <- function(path,
   message("  2. Drop XLSForm(s) under input/tools/ and raw CSV(s) under input/data/")
   message("  3. Edit config/project.yml and config/columns.yml")
   message("  4. cp .Renviron.example .Renviron   (and fill in log URLs)")
-  message("  5. targets::tar_make()")
+  message("  5. source(\"run.R\")    # or:  Rscript run.R")
 }

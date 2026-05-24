@@ -1,3 +1,35 @@
+# atRfunctions 0.0.8
+
+## Scaffold: drop `targets` in favor of a plain `run.R`
+
+The pipeline emitted by `scaffold_pipeline_project()` no longer uses the
+`targets` package. The entry point is now a single `run.R` script that
+calls atRfunctions helpers in order and writes the same three outputs +
+issues workbook per tool. Rationale: for short-deadline survey cleanups
+(3-5 days), the targets learning curve and per-stage caching overhead
+outweighed its benefits - especially since Google Sheets logs always
+re-fetch anyway.
+
+Concrete changes vs 0.0.7:
+- `inst/templates/pipeline_project/_targets.R` removed; replaced by
+  `run.R`.
+- `tar_cue(mode = "always")` machinery dropped. `always_refetch_logs`
+  toggle removed from `config/project.yml` (logs are always re-fetched
+  per source).
+- `_targets/` removed from the scaffolded `.gitignore`.
+- Per-tool intermediates now live in a global `results` list after
+  `source("run.R")` for interactive inspection (`results$<tool>$data`,
+  `results$<tool>$issues$relevancy`, ...).
+- Scaffold function doc + Next-steps message + template README + the
+  package-level README all updated to reference `run.R` instead of
+  `tar_make()`.
+- Generated-project dependency list shrinks: `targets`, `tarchetypes`
+  are no longer needed. The remaining deps are `yaml`, `readr`,
+  `writexl`, and (optionally) `googlesheets4`.
+
+Debugging the pipeline is now just: drop `browser()` anywhere in
+`run.R` or in any `R/stages.R` function, then `source("run.R")`.
+
 # atRfunctions 0.0.7
 
 ## New: `scaffold_pipeline_project()`

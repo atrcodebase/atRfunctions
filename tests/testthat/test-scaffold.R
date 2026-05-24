@@ -8,7 +8,7 @@ test_that("scaffold_pipeline_project writes the expected file tree", {
   )
 
   expected <- c(
-    "_targets.R",
+    "run.R",
     "config/project.yml",
     "config/columns.yml",
     "R/log_io.R",
@@ -38,7 +38,7 @@ test_that("scaffold output files all parse as R / YAML", {
   suppressMessages(scaffold_pipeline_project(dest, project_name = "Parse Test"))
 
   # R files must parse
-  for (f in c("_targets.R", "R/log_io.R", "R/stages.R", "R/custom_checks.R")) {
+  for (f in c("run.R", "R/log_io.R", "R/stages.R", "R/custom_checks.R")) {
     expect_silent(parse(file = file.path(dest, f)))
   }
 
@@ -46,11 +46,10 @@ test_that("scaffold output files all parse as R / YAML", {
   project <- yaml::read_yaml(file.path(dest, "config/project.yml"))
   expect_named(project,
                c("project_name", "tools", "logs", "log_env_prefix",
-                 "always_refetch_logs", "rejection"),
+                 "rejection"),
                ignore.order = TRUE)
   expect_equal(project$project_name, "Parse Test")
   expect_true("qa" %in% project$logs)
-  expect_true(isTRUE(project$always_refetch_logs))
 
   columns <- yaml::read_yaml(file.path(dest, "config/columns.yml"))
   expect_true("drop_columns" %in% names(columns))

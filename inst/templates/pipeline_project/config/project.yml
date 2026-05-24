@@ -31,11 +31,6 @@ logs:
 # different convention.
 log_env_prefix: "ATRP_"
 
-# When TRUE, log targets carry `tar_cue(mode = "always")` so they always
-# re-fetch from Google Sheets - because `targets` cannot otherwise tell
-# when an external sheet has changed.
-always_refetch_logs: true
-
 # Filter rejected interviews using the rejection log.
 rejection:
   log: "rejection"   # name of the log (must appear in `logs:` above)

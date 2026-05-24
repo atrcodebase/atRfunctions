@@ -2,14 +2,15 @@
 
 Survey data-processing pipeline scaffolded by
 [`atRfunctions::scaffold_pipeline_project()`](https://github.com/atrcodebase/atRfunctions).
-Orchestrated with [`targets`](https://docs.ropensci.org/targets/), using
-`atRfunctions` for every cleaning / labeling / checking step.
+The pipeline is a plain `run.R` script that calls `atRfunctions` helpers in
+sequence — easy to read, easy to debug (drop `browser()` anywhere and
+re-source), easy to hand off.
 
 ## Layout
 
 ```
 config/
-  project.yml         # tools, logs, toggles
+  project.yml         # tools, logs, rejection rule
   columns.yml         # drop / pii / custom_labels
 input/
   tools/              # XLSForm files (one per tool)
@@ -22,7 +23,7 @@ output/
   analyst/            # full clean dataset (raw + labeled column names)
   client/             # PII-stripped client deliverable
   issues/             # consolidated issues workbooks
-_targets.R            # pipeline definition
+run.R                 # pipeline entry point
 .Renviron.example     # log URL template - copy to .Renviron and fill in
 ```
 
@@ -57,24 +58,31 @@ _targets.R            # pipeline definition
 5. **Run the pipeline:**
 
    ```r
-   targets::tar_make()
-   targets::tar_visnetwork()  # see the DAG
+   source("run.R")        # interactive - results stay in your global env
+   # or
+   Rscript run.R          # batch
    ```
 
    Per tool, four files land under `output/`:
 
-   - `output/analyst/<tool>_clean.csv` - cleaned data, raw column names.
-   - `output/analyst/<tool>_clean_labeled.csv` - cleaned data, column names
+   - `output/analyst/<tool>_clean.csv` — cleaned data, raw column names.
+   - `output/analyst/<tool>_clean_labeled.csv` — cleaned data, column names
      replaced with survey labels (analyst-friendly).
-   - `output/client/<tool>_client.csv` - same as labeled but PII columns
+   - `output/client/<tool>_client.csv` — same as labeled but PII columns
      removed.
-   - `output/issues/<tool>_issues.xlsx` - one sheet per issue family
+   - `output/issues/<tool>_issues.xlsx` — one sheet per issue family
      (relevancy violations, select_multiple inconsistencies, untranslated
      text, custom checks).
 
-## Always-refetch logs
+## Debugging tips
 
-Because Google Sheets logs change outside of `targets`'s tracked file space,
-the pipeline marks log targets with `tar_cue(mode = "always")` whenever
-`always_refetch_logs: true` (the default) in `config/project.yml`. Turn it
-off for development runs where log fetches are slow.
+The pipeline runs top-to-bottom in a single R session, so:
+
+- **Step through any stage**: put `browser()` before the function call in
+  `run.R` (or inside the function in `R/stages.R`), then `source("run.R")`.
+- **Skip a stage**: comment it out. Each step writes back to `data`, so
+  removing a line just leaves the upstream value in place.
+- **Inspect any intermediate after a successful run**:
+  `results$main$data`, `results$main$analyst`, `results$main$issues$...`.
+- **Re-run only one tool**: remove the others from `config/project.yml`
+  (or use `project$tools <- project$tools[1]` after sourcing the config).

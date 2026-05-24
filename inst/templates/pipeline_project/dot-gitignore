@@ -1,6 +1,3 @@
-# targets cache
-_targets/
-
 # Secrets and credentials - never commit these
 .Renviron
 .secrets/
