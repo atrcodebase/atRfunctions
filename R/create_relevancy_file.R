@@ -20,7 +20,8 @@
 #' [check_relevancy_rules()] skips every row where `convert_status` is not
 #' `"ok"`.
 #'
-#' @param tool the XLSForm `survey` sheet (data frame).
+#' @param tool path to the XLSForm, a [read_xlsform()] result list, or a
+#'   pre-read `survey`-sheet data frame.
 #' @param ignore_reverse_check The list of question names to be ignored for
 #'   reverse checking
 #' @param ... For backwards compatibility: the previous argument `kobo_tool`
@@ -37,7 +38,7 @@ create_relevancy_file <- function(tool = NULL, ignore_reverse_check = NULL, ...)
   tool <- .deprecated_arg(tool, list(...), new_name = "tool", old_name = "kobo_tool")
   if (is.null(tool)) stop("`tool` is required.", call. = FALSE)
 
-  tool <- .normalize_survey(tool)
+  tool <- .resolve_tool(tool)$survey
 
   if (!all(c("type", "name", "relevant") %in% names(tool))) {
     stop("Required variable(s) not found in XLSForm")

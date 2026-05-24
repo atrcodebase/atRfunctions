@@ -74,6 +74,39 @@ NULL
   label
 }
 
+# Polymorphic `tool` resolver. Accepts any of:
+#   - a file path to an XLSForm xlsx     -> reads both sheets via read_xlsform()
+#   - a read_xlsform() result list       -> used as-is
+#   - a pre-read `survey`-sheet data frame -> wrapped as list(survey, choices=NULL)
+#
+# Always returns the list shape `list(survey, choices, flavor)`. `choices`
+# may be NULL when the caller only passed a survey-sheet data frame.
+.resolve_tool <- function(tool, tool_flavor = "auto", needs_choices = FALSE) {
+  if (is.character(tool) && length(tool) == 1) {
+    return(read_xlsform(tool, flavor = tool_flavor))
+  }
+  if (is.list(tool) && !is.data.frame(tool) &&
+      all(c("survey", "choices") %in% names(tool))) {
+    # Already a read_xlsform() result. Normalize defensively in case the caller
+    # built it by hand from sheets that haven't been normalized yet.
+    tool$survey  <- .normalize_survey(tool$survey)
+    if (!is.null(tool$choices)) tool$choices <- .normalize_choices(tool$choices)
+    if (is.null(tool$flavor)) tool$flavor <- "unknown"
+    return(tool)
+  }
+  if (is.data.frame(tool)) {
+    if (needs_choices) {
+      stop("This function needs both the survey and choices sheets. Pass a ",
+           "file path or a read_xlsform() result instead of a bare survey ",
+           "data frame.", call. = FALSE)
+    }
+    return(list(survey = .normalize_survey(tool), choices = NULL,
+                flavor = "unknown"))
+  }
+  stop("Unrecognized `tool`. Expected a file path, a read_xlsform() result, ",
+       "or the survey-sheet data frame.", call. = FALSE)
+}
+
 # ---- relevancy-conversion helpers ----
 
 # Build a question-name -> XLSForm-primary-type lookup ("select_one",

@@ -4,7 +4,8 @@
 #' both Kobo and SurveyCTO XLSForms.
 #'
 #' @param data dataframe
-#' @param tool path to the XLSForm
+#' @param tool path to the XLSForm, a [read_xlsform()] result list, or a
+#'   pre-read `survey`-sheet data frame.
 #' @param download_link default value is
 #'   `'https://artftpm.surveycto.com/view/submission-attachment/'`
 #' @param key_col default value is `'KEY'`
@@ -31,7 +32,7 @@ update_media_links <- function(data, tool = NULL,
   link_types <- c("image", "audio", "audio audit", "text audit")
   common_file_types <- ".csv$|.m4a$|.amr$|.wav$|.aac$|.mp3$|.jpg$|.ogg$"
 
-  xlsform <- read_xlsform(tool, flavor = tool_flavor)
+  xlsform <- .resolve_tool(tool, tool_flavor = tool_flavor)
   link_cols <- xlsform$survey %>%
     filter(type %in% link_types & name %in% names(data)) %>%
     pull(name)

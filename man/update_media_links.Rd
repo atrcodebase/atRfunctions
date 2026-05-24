@@ -17,7 +17,8 @@ update_media_links(
 \arguments{
 \item{data}{dataframe}
 
-\item{tool}{path to the XLSForm}
+\item{tool}{path to the XLSForm, a \code{\link[=read_xlsform]{read_xlsform()}} result list, or a
+pre-read \code{survey}-sheet data frame.}
 
 \item{download_link}{default value is
 \code{'https://artftpm.surveycto.com/view/submission-attachment/'}}

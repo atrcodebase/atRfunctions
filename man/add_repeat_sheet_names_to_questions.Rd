@@ -7,8 +7,8 @@
 add_repeat_sheet_names_to_questions(tool = NULL, ...)
 }
 \arguments{
-\item{tool}{the XLSForm \code{survey} sheet (data frame) for which the
-question's sheet is needed.}
+\item{tool}{path to the XLSForm, a \code{\link[=read_xlsform]{read_xlsform()}} result list, or a
+pre-read \code{survey}-sheet data frame.}
 
 \item{...}{For backwards compatibility: the previous argument \code{kobo_tool}
 is still accepted as a deprecated alias for \code{tool}.}

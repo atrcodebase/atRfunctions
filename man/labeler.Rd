@@ -17,7 +17,10 @@ labeler(
 \arguments{
 \item{data}{data set}
 
-\item{tool}{the path to the data collection tool (XLSForm)}
+\item{tool}{the path to the data collection tool (XLSForm), a
+\code{\link[=read_xlsform]{read_xlsform()}} result list, or a pre-read \code{survey}-sheet data frame
+(in which case \code{choices} would also need to be passed separately - not
+supported here, so prefer one of the first two forms).}
 
 \item{survey_label}{column name for the question labels in the \code{survey}
 sheet of the XLSForm. Default \code{"label::English"}.}

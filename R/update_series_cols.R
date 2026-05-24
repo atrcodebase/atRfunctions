@@ -3,16 +3,17 @@
 #' This function updates the 'select_multiple' series column values (0s,1s) based on responses in the main question.
 #'
 #' @param data dataframe
-#' @param tool The survey sheet of data collection tool
+#' @param tool path to the XLSForm, a [read_xlsform()] result list, or a
+#'   pre-read `survey`-sheet data frame.
 #' @param question_separator default value is '_'
 #'
 #'
 #' @import dplyr
+#' @import stringr
 #' @export
-update_series_cols <- function(data, tool, question_separator="_"){
-  # Read & Filter tool
-  # tool <- read_excel(tool_path, "survey", guess_max = 100000)
-  sm_cols <- tool$name[grepl("select_multiple", tool$type) & tool$name %in% names(data)]
+update_series_cols <- function(data, tool, question_separator = "_") {
+  survey <- .resolve_tool(tool)$survey
+  sm_cols <- survey$name[grepl("select_multiple", survey$type) & survey$name %in% names(data)]
 
   for(question in sm_cols){
     # print(paste0("Updating: ", question)) # Print

@@ -7,7 +7,8 @@
 convert_relevancy_to_R(tool = NULL, field_types = NULL, ...)
 }
 \arguments{
-\item{tool}{the XLSForm \code{survey} sheet (data frame).}
+\item{tool}{path to the XLSForm, a \code{\link[=read_xlsform]{read_xlsform()}} result list, or a
+pre-read \code{survey}-sheet data frame.}
 
 \item{field_types}{Optional named character vector mapping question name to
 primary XLSForm type (\code{"text"}, \code{"integer"}, \code{"select_one"},
@@ -17,8 +18,8 @@ primary XLSForm type (\code{"text"}, \code{"integer"}, \code{"select_one"},
 is still accepted as a deprecated alias for \code{tool}.}
 }
 \value{
-Character vector of R expressions, same length as \code{nrow(tool)}.
-\code{NA_character_} for rules that are empty or unsupported.
+Character vector of R expressions, same length as the survey
+sheet. \code{NA_character_} for rules that are empty or unsupported.
 }
 \description{
 Accepts a pre-read XLSForm \code{survey} data frame (Kobo or SurveyCTO). Column

@@ -7,7 +7,10 @@
 #' `list_name`/`list name`, `name`/`value`) are normalized internally.
 #'
 #' @param data data set
-#' @param tool the path to the data collection tool (XLSForm)
+#' @param tool the path to the data collection tool (XLSForm), a
+#'   [read_xlsform()] result list, or a pre-read `survey`-sheet data frame
+#'   (in which case `choices` would also need to be passed separately - not
+#'   supported here, so prefer one of the first two forms).
 #' @param survey_label column name for the question labels in the `survey`
 #'   sheet of the XLSForm. Default `"label::English"`.
 #' @param choice_label column name for value labels in the `choices` sheet of
@@ -36,7 +39,7 @@ labeler <- function(data, tool,
     if (missing(choice_label)) choice_label <- dots$choice_lable
   }
 
-  xlsform <- read_xlsform(tool, flavor = tool_flavor)
+  xlsform <- .resolve_tool(tool, tool_flavor = tool_flavor, needs_choices = TRUE)
   survey_questions <- xlsform$survey
   survey_choices   <- xlsform$choices
 

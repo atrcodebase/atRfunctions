@@ -3,8 +3,8 @@
 #' Accepts a pre-read XLSForm `survey` data frame (Kobo or SurveyCTO). Column
 #' name differences (`relevant`/`relevance`) are normalized internally.
 #'
-#' @param tool the XLSForm `survey` sheet (data frame) for which the
-#'   question's sheet is needed.
+#' @param tool path to the XLSForm, a [read_xlsform()] result list, or a
+#'   pre-read `survey`-sheet data frame.
 #' @param ... For backwards compatibility: the previous argument `kobo_tool`
 #'   is still accepted as a deprecated alias for `tool`.
 #'
@@ -14,7 +14,7 @@ add_repeat_sheet_names_to_questions <- function(tool = NULL, ...) {
   tool <- .deprecated_arg(tool, list(...), new_name = "tool", old_name = "kobo_tool")
   if (is.null(tool)) stop("`tool` is required.", call. = FALSE)
 
-  tool <- .normalize_survey(tool)
+  tool <- .resolve_tool(tool)$survey
   tool <- tool %>% filter(!is.na(type) & type != "")
 
   begin_repeat_condition = "^begin[_ ]?repeat"

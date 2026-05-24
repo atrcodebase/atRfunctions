@@ -16,7 +16,8 @@ concat_url(
 \arguments{
 \item{data}{the dataset/dataframe}
 
-\item{tool}{path to the XLSForm}
+\item{tool}{path to the XLSForm, a \code{\link[=read_xlsform]{read_xlsform()}} result list, or a
+pre-read \code{survey}-sheet data frame.}
 
 \item{server_name}{the server name}
 

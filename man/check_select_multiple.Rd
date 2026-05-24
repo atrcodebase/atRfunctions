@@ -16,8 +16,8 @@ check_select_multiple(
 \arguments{
 \item{data}{A data frame.}
 
-\item{tool}{Either a path to the XLSForm (Kobo or SurveyCTO) or a pre-read
-\code{survey}-sheet data frame.}
+\item{tool}{path to the XLSForm, a \code{\link[=read_xlsform]{read_xlsform()}} result list, or a
+pre-read \code{survey}-sheet data frame.}
 
 \item{question_separator}{Separator between question name and choice code.
 Default \code{"_"}.}

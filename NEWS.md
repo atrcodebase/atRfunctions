@@ -1,3 +1,26 @@
+# atRfunctions 0.0.4
+
+## Uniform `tool` argument
+
+Every function that takes an XLSForm-shaped `tool` argument now accepts all three canonical forms interchangeably:
+
+1. A file path (`"path/to/form.xlsx"`).
+2. A [read_xlsform()] result list.
+3. A pre-read `survey`-sheet data frame (for functions that need only the survey sheet).
+
+This means you can read an XLSForm once and pass it everywhere:
+
+```r
+xform <- read_xlsform("form.xlsx")
+data  <- labeler(data, xform)
+data  <- concat_url(data, xform, KEY = data$KEY)
+data  <- update_media_links(data, xform)
+rf    <- create_relevancy_file(xform)
+mapping <- reshape_tool(xform)
+```
+
+Affected functions: `labeler`, `concat_url`, `update_media_links`, `add_repeat_sheet_names_to_questions`, `process_group_relevancies`, `convert_relevancy_to_R`, `create_relevancy_file`, `update_series_cols`, `check_select_multiple`, `reshape_tool`. The polymorphism is implemented via a new internal `.resolve_tool()` helper.
+
 # atRfunctions 0.0.3
 
 ## Relevancy pipeline overhaul

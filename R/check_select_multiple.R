@@ -4,8 +4,8 @@
 #' consistent with the responses in the main multi-response column.
 #'
 #' @param data A data frame.
-#' @param tool Either a path to the XLSForm (Kobo or SurveyCTO) or a pre-read
-#'   `survey`-sheet data frame.
+#' @param tool path to the XLSForm, a [read_xlsform()] result list, or a
+#'   pre-read `survey`-sheet data frame.
 #' @param question_separator Separator between question name and choice code.
 #'   Default `"_"`.
 #' @param KEY Column uniquely identifying rows. Default `"KEY"`.
@@ -20,11 +20,7 @@
 check_select_multiple <- function(data, tool, question_separator = "_",
                                   KEY = "KEY", excluded_col = "",
                                   tool_flavor = "auto") {
-  survey <- if (is.character(tool) && length(tool) == 1) {
-    read_xlsform(tool, flavor = tool_flavor)$survey
-  } else {
-    .normalize_survey(tool)
-  }
+  survey <- .resolve_tool(tool, tool_flavor = tool_flavor)$survey
 
   sm_cols <- survey$name[grepl("select_multiple", survey$type) &
                            survey$name %in% names(data)]

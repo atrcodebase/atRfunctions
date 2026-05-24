@@ -22,11 +22,7 @@
 #' @export
 reshape_tool <- function(tool, excluded_cols = "", choice_label = NULL,
                          tool_flavor = "auto") {
-  xlsform <- if (is.list(tool) && all(c("survey", "choices") %in% names(tool))) {
-    tool
-  } else {
-    read_xlsform(tool, flavor = tool_flavor)
-  }
+  xlsform <- .resolve_tool(tool, tool_flavor = tool_flavor, needs_choices = TRUE)
   tool_survey  <- xlsform$survey
   tool_choices <- xlsform$choices
 

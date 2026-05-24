@@ -4,7 +4,8 @@
 #' questions. Works with both Kobo and SurveyCTO XLSForms.
 #'
 #' @param data the dataset/dataframe
-#' @param tool path to the XLSForm
+#' @param tool path to the XLSForm, a [read_xlsform()] result list, or a
+#'   pre-read `survey`-sheet data frame.
 #' @param server_name the server name
 #' @param KEY the unique identifier column name - UUID
 #' @param question_types a string vector of question types which the url should
@@ -21,7 +22,7 @@ concat_url <- function(data, tool,
                        KEY = KEY,
                        question_types = c("audio audit", "text audit", "audio", "image"),
                        tool_flavor = "auto") {
-  xlsform <- read_xlsform(tool, flavor = tool_flavor)
+  xlsform <- .resolve_tool(tool, tool_flavor = tool_flavor)
   survey_questions <- xlsform$survey %>%
     filter(type %in% question_types) %>%
     pull(name)

@@ -9,7 +9,8 @@ update_series_cols(data, tool, question_separator = "_")
 \arguments{
 \item{data}{dataframe}
 
-\item{tool}{The survey sheet of data collection tool}
+\item{tool}{path to the XLSForm, a \code{\link[=read_xlsform]{read_xlsform()}} result list, or a
+pre-read \code{survey}-sheet data frame.}
 
 \item{question_separator}{default value is '_'}
 }

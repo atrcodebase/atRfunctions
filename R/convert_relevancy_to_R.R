@@ -10,15 +10,16 @@
 #' miscompiled into nonsense R. Use [create_relevancy_file()] to get a
 #' diagnostics column (`convert_status`) describing why each NA was returned.
 #'
-#' @param tool the XLSForm `survey` sheet (data frame).
+#' @param tool path to the XLSForm, a [read_xlsform()] result list, or a
+#'   pre-read `survey`-sheet data frame.
 #' @param field_types Optional named character vector mapping question name to
 #'   primary XLSForm type (`"text"`, `"integer"`, `"select_one"`,
 #'   `"select_multiple"`, ...). If `NULL`, built from `tool`.
 #' @param ... For backwards compatibility: the previous argument `kobo_tool`
 #'   is still accepted as a deprecated alias for `tool`.
 #'
-#' @return Character vector of R expressions, same length as `nrow(tool)`.
-#'   `NA_character_` for rules that are empty or unsupported.
+#' @return Character vector of R expressions, same length as the survey
+#'   sheet. `NA_character_` for rules that are empty or unsupported.
 #' @import stringr
 #'
 #' @export
@@ -26,7 +27,7 @@ convert_relevancy_to_R <- function(tool = NULL, field_types = NULL, ...) {
   tool <- .deprecated_arg(tool, list(...), new_name = "tool", old_name = "kobo_tool")
   if (is.null(tool)) stop("`tool` is required.", call. = FALSE)
 
-  tool <- .normalize_survey(tool)
+  tool <- .resolve_tool(tool)$survey
 
   if (!all(c("type", "name", "relevant") %in% names(tool))) {
     stop("Required variable(s) not found in XLSForm")

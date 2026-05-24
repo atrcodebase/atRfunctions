@@ -7,7 +7,8 @@
 create_relevancy_file(tool = NULL, ignore_reverse_check = NULL, ...)
 }
 \arguments{
-\item{tool}{the XLSForm \code{survey} sheet (data frame).}
+\item{tool}{path to the XLSForm, a \code{\link[=read_xlsform]{read_xlsform()}} result list, or a
+pre-read \code{survey}-sheet data frame.}
 
 \item{ignore_reverse_check}{The list of question names to be ignored for
 reverse checking}

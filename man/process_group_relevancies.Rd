@@ -7,14 +7,15 @@
 process_group_relevancies(tool = NULL, ...)
 }
 \arguments{
-\item{tool}{the XLSForm \code{survey} sheet (data frame).}
+\item{tool}{path to the XLSForm, a \code{\link[=read_xlsform]{read_xlsform()}} result list, or a
+pre-read \code{survey}-sheet data frame.}
 
 \item{...}{For backwards compatibility: the previous argument \code{kobo_tool}
 is still accepted as a deprecated alias for \code{tool}.}
 }
 \value{
-The input tool with \code{relevant} column updated to carry the merged
-group + question relevancy for each row.
+The input survey data frame with \code{relevant} column updated to
+carry the merged group + question relevancy for each row.
 }
 \description{
 Walks the XLSForm \code{survey} sheet tracking \code{begin_group} / \code{begin_repeat}
