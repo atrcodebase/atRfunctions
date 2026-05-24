@@ -30,10 +30,7 @@
 #'           unique_id_df2 = "id",
 #'           compare_all = TRUE
 #' )
-#' @usage
-#' library(atRfunctions)
-#' compare_dt(df1, df2, unique_id_df1, unique_id_df2, compare_all = TRUE)
-
+#'
 #' @import tidyr
 #' @import dplyr
 #' @import stringr

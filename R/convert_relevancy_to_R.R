@@ -1,21 +1,28 @@
 #' Converts the relevancy rules to R statements
 #'
-#' @param kobo_tool The data collection tool
+#' Accepts a pre-read XLSForm `survey` data frame (Kobo or SurveyCTO). Column
+#' name differences (`relevant`/`relevance`) are normalized internally.
+#'
+#' @param tool the XLSForm `survey` sheet (data frame).
+#' @param ... For backwards compatibility: the previous argument `kobo_tool`
+#'   is still accepted as a deprecated alias for `tool`.
 #'
 #' @return The list of R statements converted from Relevancy Formulas
 #' @import stringr
 #'
 #' @export
-convert_relevancy_to_R <- function(kobo_tool) {
+convert_relevancy_to_R <- function(tool = NULL, ...) {
+  tool <- .deprecated_arg(tool, list(...), new_name = "tool", old_name = "kobo_tool")
+  if (is.null(tool)) stop("`tool` is required.", call. = FALSE)
 
-  if(!require(stringr)) install.packages("stringr")
+  tool <- .normalize_survey(tool)
 
-  if(!all(c("type", "name", "relevant") %in% names(kobo_tool))){
-    stop("Required variable(s) not found in Kobo Tool")
+  if (!all(c("type", "name", "relevant") %in% names(tool))) {
+    stop("Required variable(s) not found in XLSForm")
   }
 
-  relevancy_string = kobo_tool$relevant
-  select_multiple_questions = kobo_tool$name[grepl("select_multiple ", kobo_tool$type)]
+  relevancy_string = tool$relevant
+  select_multiple_questions = tool$name[grepl("select_multiple ", tool$type)]
 
   selected_pattern <- "selected\\(\\$\\{(.+?)\\} *, *['\"](.+?)['\"]\\)"
   strings_containing_not = grepl("not\\(", relevancy_string)
@@ -43,7 +50,7 @@ convert_relevancy_to_R <- function(kobo_tool) {
   relevancy_string <- ifelse(grepl(" or ", relevancy_string), gsub("( and )", ") and (", relevancy_string), relevancy_string)
   relevancy_string <- gsub("(.*)( or )(.*)", "(\\1\\2\\3)", relevancy_string)
 
-  replacements = c(" and " = " & ", " or " = " | ", "\"" = "'", " +" = " ", '"or ' = '" | ', "'or " = "' | ")#, "((" = "(", "))" = ")")
+  replacements = c(" and " = " & ", " or " = " | ", "\"" = "'", " +" = " ", '"or ' = '" | ', "'or " = "' | ")
   relevancy_string <- str_replace_all(relevancy_string, replacements)
 
   replacements <- c(" == " = " %in% ", " != " = " %notin% ")
@@ -51,5 +58,3 @@ convert_relevancy_to_R <- function(kobo_tool) {
 
   return(relevancy_string)
 }
-
-

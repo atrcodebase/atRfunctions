@@ -1,10 +1,20 @@
 #' Set the relevancy defined for groups on the questions inside
 #'
-#' @param kobo_tool The data collection tool
+#' Accepts a pre-read XLSForm `survey` data frame (Kobo or SurveyCTO). Column
+#' name differences (`relevant`/`relevance`) are normalized internally.
 #'
-#' @return The list of questions and its group name involved
+#' @param tool the XLSForm `survey` sheet (data frame).
+#' @param ... For backwards compatibility: the previous argument `kobo_tool`
+#'   is still accepted as a deprecated alias for `tool`.
+#'
+#' @return The list of questions and their group name involved
 #' @export
-process_group_relevancies <- function(kobo_tool){
+process_group_relevancies <- function(tool = NULL, ...) {
+  tool <- .deprecated_arg(tool, list(...), new_name = "tool", old_name = "kobo_tool")
+  if (is.null(tool)) stop("`tool` is required.", call. = FALSE)
+
+  tool <- .normalize_survey(tool)
+
   begin_group_relevancies <- c()
 
   process_question <- function(question_type, relevancy) {
@@ -26,7 +36,7 @@ process_group_relevancies <- function(kobo_tool){
 
         begin_group_relevancies_merged <- gsub(" +", " ", begin_group_relevancies_merged)
 
-        solve_duplication = function(log_operator, string){
+        solve_duplication = function(log_operator, string) {
           splitted_string <- strsplit(string, log_operator)
           new_string = unlist(lapply(splitted_string, function(x) paste(x[!duplicated(x)], collapse = log_operator)))
           return(new_string)
@@ -41,6 +51,6 @@ process_group_relevancies <- function(kobo_tool){
       return(relevancy)
     }
   }
-  kobo_tool$relevant <- mapply(process_question, kobo_tool$type, kobo_tool$relevant, SIMPLIFY = TRUE)
-  return(kobo_tool)
+  tool$relevant <- mapply(process_question, tool$type, tool$relevant, SIMPLIFY = TRUE)
+  return(tool)
 }

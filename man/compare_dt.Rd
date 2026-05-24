@@ -4,8 +4,13 @@
 \alias{compare_dt}
 \title{Compare data frames}
 \usage{
-library(atRfunctions)
-compare_dt(df1, df2, unique_id_df1, unique_id_df2, compare_all = TRUE)
+compare_dt(
+  df1,
+  df2,
+  unique_id_df1 = "KEY",
+  unique_id_df2 = "KEY",
+  compare_all = TRUE
+)
 }
 \arguments{
 \item{df1}{old version of the dataset}
@@ -44,4 +49,5 @@ compare_dt(df1 = mtcars_v1, df2 = mtcars_v2,
           unique_id_df2 = "id",
           compare_all = TRUE
 )
+
 }

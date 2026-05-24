@@ -4,20 +4,21 @@
 \alias{create_relevancy_file}
 \title{Creates the relevancy file}
 \usage{
-create_relevancy_file(kobo_tool, ignore_reverse_check = NULL)
+create_relevancy_file(tool = NULL, ignore_reverse_check = NULL, ...)
 }
 \arguments{
-\item{kobo_tool}{The data collection tool's survey sheet}
+\item{tool}{the XLSForm \code{survey} sheet (data frame).}
 
-\item{ignore_reverse_check}{The list of question names to be ignored for reverse checking}
+\item{ignore_reverse_check}{The list of question names to be ignored for
+reverse checking}
+
+\item{...}{For backwards compatibility: the previous argument \code{kobo_tool}
+is still accepted as a deprecated alias for \code{tool}.}
 }
 \value{
-The input for check_relevancy_rules.R function
+The input for \code{\link[=check_relevancy_rules]{check_relevancy_rules()}}
 }
 \description{
-#' @usage
-library(atRfunctions)
-create_relevancy_file(kobo_tool = kobo_tool,
-ignore_reverse_check = c("Q1","Q2","Q10")
-)
+Works with both Kobo and SurveyCTO XLSForms - column name differences
+(\code{relevant}/\code{relevance}) are normalized internally.
 }

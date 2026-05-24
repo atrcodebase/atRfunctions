@@ -1,21 +1,11 @@
 #' Apply data cleaning/change log
 #'
 #' Apply cleaning log
-#' @usage
-#' library(atRfunctions)
-#' apply_log(data, log,
-#'           data_KEY = "KEY",
-#'           log_columns = c(question = "question",
-#'                           old_value = "old_value",
-#'                           new_value = "new_value",
-#'                           KEY = "KEY"
-#'                            )
-#'           )
 #'
 #' @param data Data set
 #' @param log The log file
-#' @param date_KEY The Unique identifier in data set. Must be same as the KEY in log file
-#' @param log_column Column names in log file
+#' @param data_KEY The Unique identifier in data set. Must be same as the KEY in log file
+#' @param log_columns Column names in log file
 #' @note It is suggested to rename the column names in the log file as below
 #'
 #'    **question**: column names in the data which the changes should apply to

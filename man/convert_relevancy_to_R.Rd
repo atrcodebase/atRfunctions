@@ -4,14 +4,18 @@
 \alias{convert_relevancy_to_R}
 \title{Converts the relevancy rules to R statements}
 \usage{
-convert_relevancy_to_R(kobo_tool)
+convert_relevancy_to_R(tool = NULL, ...)
 }
 \arguments{
-\item{kobo_tool}{The data collection tool}
+\item{tool}{the XLSForm \code{survey} sheet (data frame).}
+
+\item{...}{For backwards compatibility: the previous argument \code{kobo_tool}
+is still accepted as a deprecated alias for \code{tool}.}
 }
 \value{
 The list of R statements converted from Relevancy Formulas
 }
 \description{
-Converts the relevancy rules to R statements
+Accepts a pre-read XLSForm \code{survey} data frame (Kobo or SurveyCTO). Column
+name differences (\code{relevant}/\code{relevance}) are normalized internally.
 }

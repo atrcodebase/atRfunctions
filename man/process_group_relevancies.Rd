@@ -4,14 +4,18 @@
 \alias{process_group_relevancies}
 \title{Set the relevancy defined for groups on the questions inside}
 \usage{
-process_group_relevancies(kobo_tool)
+process_group_relevancies(tool = NULL, ...)
 }
 \arguments{
-\item{kobo_tool}{The data collection tool}
+\item{tool}{the XLSForm \code{survey} sheet (data frame).}
+
+\item{...}{For backwards compatibility: the previous argument \code{kobo_tool}
+is still accepted as a deprecated alias for \code{tool}.}
 }
 \value{
-The list of questions and its group name involved
+The list of questions and their group name involved
 }
 \description{
-Set the relevancy defined for groups on the questions inside
+Accepts a pre-read XLSForm \code{survey} data frame (Kobo or SurveyCTO). Column
+name differences (\code{relevant}/\code{relevance}) are normalized internally.
 }

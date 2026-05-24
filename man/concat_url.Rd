@@ -9,20 +9,26 @@ concat_url(
   tool,
   server_name = "https://atrconsultingaf.surveycto.com",
   KEY = KEY,
-  question_types = c("audio audit", "text audit", "audio", "image")
+  question_types = c("audio audit", "text audit", "audio", "image"),
+  tool_flavor = "auto"
 )
 }
 \arguments{
 \item{data}{the dataset/dataframe}
 
-\item{tool}{link to SCTO tool}
+\item{tool}{path to the XLSForm}
 
 \item{server_name}{the server name}
 
 \item{KEY}{the unique identifier column name - UUID}
 
-\item{question_types}{a string vector of question types which the url should be concatenated. Defualt values are: c("audio audit", "text audit", "audio", "image")}
+\item{question_types}{a string vector of question types which the url should
+be concatenated. Default values are: \code{c("audio audit", "text audit", "audio", "image")}.}
+
+\item{tool_flavor}{one of \code{"auto"}, \code{"kobo"}, \code{"surveycto"}. See
+\code{\link[=read_xlsform]{read_xlsform()}}. Default \code{"auto"}.}
 }
 \description{
-The \code{concat_url()} function concatenates the url for image and audio questions
+The \code{concat_url()} function concatenates the url for image and audio
+questions. Works with both Kobo and SurveyCTO XLSForms.
 }

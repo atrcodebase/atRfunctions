@@ -7,14 +7,8 @@
 #' @param question_separator default value is '_'
 #' @param KEY default value is 'KEY'
 #'
-#' @usage
-#' library(atRfunctions)
-#' check_select_multiple(data,
-#'                    tool_survey,
-#'                    question_separator = "_",
-#'                    KEY = "KEY")
-#'
 #' @import dplyr
+#' @import stringr
 #' @export
 check_select_multiple <- function(data, tool, question_separator="_", KEY="KEY"){
   # Read & Filter tool

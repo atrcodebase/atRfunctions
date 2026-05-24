@@ -4,24 +4,40 @@
 \alias{labeler}
 \title{Label Data set}
 \usage{
-library(atRfunctions)
-labeler(data, tool,
-        survey_label = "label:English",
-        choice_lable = "label:English",
-        multi_response_sep = ";"
-        )
+labeler(
+  data,
+  tool,
+  survey_label = "label::English",
+  choice_label = "label::English",
+  multi_response_sep = ";",
+  tool_flavor = "auto",
+  ...
+)
 }
 \arguments{
 \item{data}{data set}
 
-\item{tool}{the path to the data collection tool}
+\item{tool}{the path to the data collection tool (XLSForm)}
 
-\item{survey_label}{column name for the question labels in 'survey' sheet of the data collection tool. The default value is 'label:English'}
+\item{survey_label}{column name for the question labels in the \code{survey}
+sheet of the XLSForm. Default \code{"label::English"}.}
 
-\item{choice_lable}{column name for value labels in 'choices' sheet of the data collection tool. The default value is 'label:English'}
+\item{choice_label}{column name for value labels in the \code{choices} sheet of
+the XLSForm. Default \code{"label::English"}.}
 
-\item{multi_response_sep}{separator for the multiple select questions. The default value is ';'}
+\item{multi_response_sep}{separator for the multiple select questions.
+Default \code{";"}.}
+
+\item{tool_flavor}{one of \code{"auto"}, \code{"kobo"}, \code{"surveycto"}. See
+\code{\link[=read_xlsform]{read_xlsform()}}. Default \code{"auto"}.}
+
+\item{...}{For backwards compatibility: the deprecated argument
+\code{choice_lable} (misspelling) is still accepted and mapped to
+\code{choice_label}.}
 }
 \description{
-Attach value labels to single-select and multiple select questions
+Attach value labels to single-select and multiple select questions. Works
+with both Kobo and SurveyCTO XLSForms - the flavor is auto-detected by
+default, and column-name differences (\code{relevant}/\code{relevance},
+\code{list_name}/\verb{list name}, \code{name}/\code{value}) are normalized internally.
 }

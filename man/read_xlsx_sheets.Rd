@@ -4,12 +4,7 @@
 \alias{read_xlsx_sheets}
 \title{Reading XLSX data as a list}
 \usage{
-library(atRfunctions)
-read_xlsx_sheets(
-         path,
-         guess_max = 5000000,
-         convert_to_na = c("N/A", "-", " ")
-         )
+read_xlsx_sheets(path, guess_max = 5e+06, convert_to_na = c("N/A", "-", " "))
 }
 \arguments{
 \item{path}{Path to the XLSX file}

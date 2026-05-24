@@ -4,15 +4,12 @@
 \alias{update_series_cols}
 \title{Update Select_multiple series columns}
 \usage{
-library(atRfunctions)
-update_series_cols(data,
-                   tool_survey,
-                   question_separator = "/")
+update_series_cols(data, tool, question_separator = "_")
 }
 \arguments{
 \item{data}{dataframe}
 
-\item{tool_survey}{The survey sheet of data collection tool}
+\item{tool}{The survey sheet of data collection tool}
 
 \item{question_separator}{default value is '_'}
 }

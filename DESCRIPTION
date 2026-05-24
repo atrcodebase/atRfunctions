@@ -1,17 +1,23 @@
 Package: atRfunctions
 Title: wrap-up ATR's custom functions
-Version: 0.0.1.1
-Authors@R: 
+Version: 0.0.2
+Authors@R:
     person("ATR", "Data Management Team", , "datamanagement.atr@gmail.com", role = c("aut", "cre"))
-Description: This package aims to wrap-up the custom functions that we use most frequently
+Description: Wraps the custom functions used most frequently by the ATR
+    Data Management Team for survey data workflows. Supports both Kobo and
+    SurveyCTO XLSForms via auto-detected column normalization.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
-Imports: 
+RoxygenNote: 7.3.2
+Imports:
     dplyr,
     readxl,
     stringr,
     tidyr,
     purrr,
     openxlsx
+Suggests:
+    testthat (>= 3.0.0),
+    writexl
+Config/testthat/edition: 3

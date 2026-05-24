@@ -4,11 +4,6 @@
 #'
 #' @param path The directory path to create
 #'
-#' @usage
-#' library(atRfunctions)
-#' create_directory(path)
-#'
-#' @import dplyr
 #' @export
 create_directory <- function(path){
   if (!file.exists(path)) {

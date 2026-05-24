@@ -4,8 +4,7 @@
 \alias{missing_translation}
 \title{Generate translation log}
 \usage{
-library(atRfunctions)
-missing_translation(data, KEY, excluded_cols)
+missing_translation(data, KEY = "KEY", excluded_cols)
 }
 \arguments{
 \item{data}{dataframe}
@@ -14,6 +13,16 @@ missing_translation(data, KEY, excluded_cols)
 
 \item{excluded_cols}{list of columns to be ignored}
 }
+\value{
+A data frame of untranslated values with columns \code{question},
+\code{old_value}, \code{new_value}, \code{uuid}, \code{Remarks}. Empty data frame if nothing
+was flagged.
+}
 \description{
 Generate translation log
+}
+\note{
+Prior to package version 0.0.2, this function built \code{log} internally
+but did not return it (callers received \code{NULL}). This was a bug; it now
+returns the log.
 }

@@ -2,16 +2,21 @@
 % Please edit documentation in R/add_repeat_sheet_names_to_questions.R
 \name{add_repeat_sheet_names_to_questions}
 \alias{add_repeat_sheet_names_to_questions}
-\title{Identify and set the sheets names for each question in Data collection tool}
+\title{Identify and set the sheet names for each question in Data collection tool}
 \usage{
-add_repeat_sheet_names_to_questions(kobo_tool)
+add_repeat_sheet_names_to_questions(tool = NULL, ...)
 }
 \arguments{
-\item{kobo_tool}{the kobo tool for which the question's sheet needed}
+\item{tool}{the XLSForm \code{survey} sheet (data frame) for which the
+question's sheet is needed.}
+
+\item{...}{For backwards compatibility: the previous argument \code{kobo_tool}
+is still accepted as a deprecated alias for \code{tool}.}
 }
 \value{
-The list of questions and its sheet name
+The list of questions and their sheet names
 }
 \description{
-Identify and set the sheets names for each question in Data collection tool
+Accepts a pre-read XLSForm \code{survey} data frame (Kobo or SurveyCTO). Column
+name differences (\code{relevant}/\code{relevance}) are normalized internally.
 }

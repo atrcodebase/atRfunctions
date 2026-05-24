@@ -4,24 +4,22 @@
 \alias{apply_log}
 \title{Apply data cleaning/change log}
 \usage{
-library(atRfunctions)
-apply_log(data, log,
-          data_KEY = "KEY",
-          log_columns = c(question = "question",
-                          old_value = "old_value",
-                          new_value = "new_value",
-                          KEY = "KEY"
-                           )
-          )
+apply_log(
+  data,
+  log,
+  data_KEY = "KEY",
+  log_columns = c(question = "question", old_value = "old_value", new_value =
+    "new_value", KEY = "KEY")
+)
 }
 \arguments{
 \item{data}{Data set}
 
 \item{log}{The log file}
 
-\item{date_KEY}{The Unique identifier in data set. Must be same as the KEY in log file}
+\item{data_KEY}{The Unique identifier in data set. Must be same as the KEY in log file}
 
-\item{log_column}{Column names in log file}
+\item{log_columns}{Column names in log file}
 }
 \description{
 Apply cleaning log

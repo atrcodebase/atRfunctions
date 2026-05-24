@@ -1,13 +1,6 @@
 #' Reading XLSX data as a list
 #'
 #' Read XLSX as list
-#' @usage
-#' library(atRfunctions)
-#' read_xlsx_sheets(
-#'          path,
-#'          guess_max = 5000000,
-#'          convert_to_na = c("N/A", "-", " ")
-#'          )
 #'
 #' @param path Path to the XLSX file
 #' @param guess_max Guess Max ; defaults to 5000000

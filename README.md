@@ -15,6 +15,22 @@ library(devtools)
 install_github("atrcodebase/atRfunctions")
 ```
 
+## Kobo & SurveyCTO support
+
+XLSForm-aware functions (`labeler()`, `concat_url()`, `update_media_links()`,
+and the relevancy pipeline) work with both Kobo and SurveyCTO tools out of the
+box. The flavor is auto-detected from the XLSForm's column names, but you can
+pin it explicitly:
+
+```r
+labeler(data, "tool.xlsx", tool_flavor = "kobo")        # force Kobo
+concat_url(data, "tool.xlsx", tool_flavor = "surveycto")# force SurveyCTO
+```
+
+The new helper `read_xlsform()` reads `survey` and `choices` in one go and
+normalizes the column names (`relevant`/`relevance`, `list_name`/`list name`,
+`name`/`value`) so you can pass either flavor downstream.
+
 ## Functions
 This package includes the following functions.
 
@@ -52,9 +68,10 @@ concat_url(data,
 ```r
 library(atRfunctions)
 labeler(data, tool,
-        survey_label = "label:English",
-        choice_lable = "label:English",
-        multi_response_sep = ";"
+        survey_label = "label::English",
+        choice_label = "label::English",
+        multi_response_sep = ";",
+        tool_flavor = "auto"
         )
 ```
 
@@ -62,13 +79,15 @@ labeler(data, tool,
 
   `data` data set
 
-  `tool` the path to the SurveyCTO data collection tool
+  `tool` the path to the XLSForm (Kobo or SurveyCTO)
 
-  `survey_label` column name for the question labels in 'survey' sheet of the SurveyCTO data collection tool. The default value is 'label:English'
+  `survey_label` column name for the question labels in the 'survey' sheet of the XLSForm. The default value is 'label::English'
 
-  `choice_lable` column name for value label in 'choices' sheet of the SurveyCTO data collection tool. The default value is 'label:English'
+  `choice_label` column name for value label in the 'choices' sheet of the XLSForm. The default value is 'label::English'. (The old misspelling `choice_lable` still works but is deprecated.)
 
   `multi_response_sep` separator for the multi-select questions. The default value is ';'
+
+  `tool_flavor` one of `"auto"`, `"kobo"`, `"surveycto"`. Default `"auto"`.
   
 #### compare_dt()
 

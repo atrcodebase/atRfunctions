@@ -9,18 +9,13 @@
 #' @param sheet_name The sheet name of data set in case it holds multiple sheets. Default value to "data"
 #' @param KEY The Unique ID of observations. Default value to "KEY"
 #'
-#' @usage check_relevancy_rules(data,
-#'                              tool_relevancy,
-#'                              sheet_name = "data",
-#'                              KEY = "KEY")
-#'
 #' @return Data frame, containing the relevancy rules broken
 #' @import dplyr
 #' @import stringr
+#' @import tidyr
 #' @export
 check_relevancy_rules <- function(data, tool_relevancy, sheet_name = "data", KEY="KEY"){
   # initiate Log
-  `%notin%` <- Negate(`%in%`)
   relevancy_log <- data.frame()
   missing_cols <- c()
   missing_relev_cols <- c()

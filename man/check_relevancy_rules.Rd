@@ -4,10 +4,7 @@
 \alias{check_relevancy_rules}
 \title{Check Relevancy Rule}
 \usage{
-check_relevancy_rules(data,
-                             tool_relevancy,
-                             sheet_name = "data",
-                             KEY = "KEY")
+check_relevancy_rules(data, tool_relevancy, sheet_name = "data", KEY = "KEY")
 }
 \arguments{
 \item{data}{The data set for which the relevancy will be checked}

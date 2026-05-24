@@ -7,12 +7,6 @@
 #' @param question_separator default value is '_'
 #'
 #'
-#' @usage
-#' library(atRfunctions)
-#' update_series_cols(data,
-#'                    tool,
-#'                    question_separator = "_")
-#'
 #' @import dplyr
 #' @export
 update_series_cols <- function(data, tool, question_separator="_"){
