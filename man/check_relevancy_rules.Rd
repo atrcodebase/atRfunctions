@@ -9,17 +9,28 @@ check_relevancy_rules(data, tool_relevancy, sheet_name = "data", KEY = "KEY")
 \arguments{
 \item{data}{The data set for which the relevancy will be checked}
 
-\item{tool_relevancy}{The output of create_relevancy_file function, a file in which all the relevancy formulas are converted to what is understandable by R}
+\item{tool_relevancy}{The output of \code{\link[=create_relevancy_file]{create_relevancy_file()}}}
 
-\item{sheet_name}{The sheet name of data set in case it holds multiple sheets. Default value to "data"}
+\item{sheet_name}{The sheet name of data set in case it holds multiple
+sheets. Default value to "data"}
 
 \item{KEY}{The Unique ID of observations. Default value to "KEY"}
 }
 \value{
-Data frame, containing the relevancy rules broken
+Data frame, containing the relevancy rules broken, with an
+attribute \code{"skipped"} (data frame) listing rules that were not
+evaluated and why.
 }
 \description{
-The function looks up for any value violate the relevancy rules defined in the tool.
-However, the tool_relevancy parameter of the function is dependent to another function
-called create_relevancy_file by which the parameter can get the suitable input
+Walks the relevancy file produced by \code{\link[=create_relevancy_file]{create_relevancy_file()}} and flags
+rows in \code{data} whose values violate the rules.
+}
+\details{
+Rules whose \code{convert_status} is anything other than \code{"ok"} are skipped
+(their conversion was deferred at file-build time because the XLSForm
+relevance expression uses constructs this package does not translate -
+see \code{\link[=create_relevancy_file]{create_relevancy_file()}}). Rules whose evaluation throws at runtime
+are skipped too: a log row with \code{Remarks = "eval_error: <msg>"} is
+written and the loop continues to the next rule. The attribute
+\code{"skipped"} on the returned data frame carries a summary of skips.
 }

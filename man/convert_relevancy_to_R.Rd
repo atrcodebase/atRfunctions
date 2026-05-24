@@ -2,20 +2,33 @@
 % Please edit documentation in R/convert_relevancy_to_R.R
 \name{convert_relevancy_to_R}
 \alias{convert_relevancy_to_R}
-\title{Converts the relevancy rules to R statements}
+\title{Converts XLSForm relevancy rules to R expressions}
 \usage{
-convert_relevancy_to_R(tool = NULL, ...)
+convert_relevancy_to_R(tool = NULL, field_types = NULL, ...)
 }
 \arguments{
 \item{tool}{the XLSForm \code{survey} sheet (data frame).}
+
+\item{field_types}{Optional named character vector mapping question name to
+primary XLSForm type (\code{"text"}, \code{"integer"}, \code{"select_one"},
+\code{"select_multiple"}, ...). If \code{NULL}, built from \code{tool}.}
 
 \item{...}{For backwards compatibility: the previous argument \code{kobo_tool}
 is still accepted as a deprecated alias for \code{tool}.}
 }
 \value{
-The list of R statements converted from Relevancy Formulas
+Character vector of R expressions, same length as \code{nrow(tool)}.
+\code{NA_character_} for rules that are empty or unsupported.
 }
 \description{
 Accepts a pre-read XLSForm \code{survey} data frame (Kobo or SurveyCTO). Column
 name differences (\code{relevant}/\code{relevance}) are normalized internally.
+}
+\details{
+Rules that use XPath functions other than \code{selected()} and \code{not()} (e.g.
+\code{count-selected}, \code{if}, \code{regex}, \code{coalesce}, \code{pulldata}, date/time helpers,
+\code{int}, \code{string-length}) are deliberately \strong{not} converted - the function
+returns \code{NA} for those rules so they can be skipped downstream rather than
+miscompiled into nonsense R. Use \code{\link[=create_relevancy_file]{create_relevancy_file()}} to get a
+diagnostics column (\code{convert_status}) describing why each NA was returned.
 }

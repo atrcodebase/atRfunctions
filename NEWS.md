@@ -1,3 +1,27 @@
+# atRfunctions 0.0.3
+
+## Relevancy pipeline overhaul
+
+The XLSForm relevancy conversion and checking pipeline was rewritten to fix several classes of invalid R conditions the old converter produced. The audit that drove the change is summarized below.
+
+### Behavior changes (output-affecting)
+
+- `create_relevancy_file()` gains two new columns: **`convert_status`** (`"ok"`, `"unsupported_function"`, `"unsupported_operator"`, `"parse_error"`, `"empty"`) and **`convert_error`** (short reason string when not `"ok"`). Existing columns are unchanged.
+- Rules that use XPath functions other than `selected()` and `not()` (e.g. `count-selected`, `if`, `regex`, `coalesce`, `pulldata`, `int`, `string-length`, date/time helpers) are no longer best-effort converted into nonsense R. Their `Rcondition` is `NA` and `check_relevancy_rules()` skips them.
+- The generated `Rcondition` strings are now produced via `deparse1()`-style quoting, which means literal regex patterns are written with the correct number of backslashes for `parse(text=...)`. The legacy `gsub("\\\\", "\\\\\\\\", ...)` post-processing in `create_relevancy_file()` is removed - it double-escaped the new strings.
+- `check_relevancy_rules()` now returns a data frame with an `attr(<result>, "skipped")` attribute listing rules that were not evaluated and why. A summary `message()` reports the total skip count.
+
+### Bug fixes
+
+- **`selected()` with regex-meta choice values.** Previously `selected(${size}, '1.5')` became `grepl('\b1.5\b', data$size)` where `.` matches any character (so `"1X5"` matched). The converter now escapes regex metacharacters: the same input becomes `grepl("\\b1\\.5\\b", data$size)`, which matches `"1.5"` only.
+- **Apostrophes in choice values.** `selected(${q}, "won't")` previously produced unparseable R (`data$q = 'won't'`). It now produces parseable R via `deparse1()`.
+- **AND/OR precedence mangling.** The old converter wrapped AND clauses in parens whenever the expression contained `or`, producing unbalanced parens and reshuffling logic. The new converter relies on the fact that XPath `and`/`or` precedence matches R `&`/`|` precedence and does no paren rewriting.
+- **String-vs-numeric `==` for character columns.** The old `==` -> `%in%` rewrite produced silently-wrong results when comparing a character column to an unquoted numeric literal (e.g. `c("5","10") %in% 5` returns all FALSE). The `%in%` rewrite is removed; comparisons use `==` (which R type-coerces correctly) and character-typed XLSForm fields are wrapped in `as.character()` to be robust to data-type drift.
+- **`check_relevancy_rules()` no longer crashes on a bad rule.** A single `parse()`/`eval()` failure used to abort the whole file. Each rule is now wrapped in `tryCatch`; failures are logged in the `skipped` attribute and the loop continues.
+- **Missing relevant-column path was buggy.** When a rule referenced a column not present in `data`, the function appended to `missing_relev_cols` but fell through to `eval()` and crashed. It now `next`s cleanly.
+- **`process_group_relevancies()` precedence.** When concatenating a group's relevancy with a question's relevancy, the function now wraps operands containing `or` in parentheses so that XPath precedence is preserved. Previously `${a}=1` combined with `${b}=1 or ${b}=2` produced `${a}=1 and ${b}=1 or ${b}=2`, which XPath/R both parse as `(${a}=1 and ${b}=1) or ${b}=2` (the wrong tree).
+- **`process_group_relevancies()` deduplication.** The old per-operator split-and-unique dedup mangled mixed `and`/`or` expressions. The new dedup only collapses adjacent identical operands at the top `and` level - never across `or` boundaries.
+
 # atRfunctions 0.0.2
 
 ## New features

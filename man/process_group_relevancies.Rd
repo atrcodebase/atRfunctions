@@ -13,9 +13,20 @@ process_group_relevancies(tool = NULL, ...)
 is still accepted as a deprecated alias for \code{tool}.}
 }
 \value{
-The list of questions and their group name involved
+The input tool with \code{relevant} column updated to carry the merged
+group + question relevancy for each row.
 }
 \description{
+Walks the XLSForm \code{survey} sheet tracking \code{begin_group} / \code{begin_repeat}
+nesting. For every non-group question, the function combines the open
+group relevancies (joined by \code{and}) with the question's own relevancy
+(also joined by \code{and}). Operands containing \code{or} are wrapped in
+parentheses to preserve XPath precedence - without this, a group
+relevancy \verb{$\{a\}=1} combined with a question relevancy \verb{$\{b\}=1 or $\{b\}=2}
+would be silently re-parsed as \verb{($\{a\}=1 and $\{b\}=1) or $\{b\}=2}, which is
+not what the form author wrote.
+}
+\details{
 Accepts a pre-read XLSForm \code{survey} data frame (Kobo or SurveyCTO). Column
 name differences (\code{relevant}/\code{relevance}) are normalized internally.
 }

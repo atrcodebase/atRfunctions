@@ -16,9 +16,30 @@ reverse checking}
 is still accepted as a deprecated alias for \code{tool}.}
 }
 \value{
-The input for \code{\link[=check_relevancy_rules]{check_relevancy_rules()}}
+Data frame with columns \code{type}, \code{name}, \code{relevance_rule},
+\code{relevant_question}, \code{relevant_value}, \code{Rcondition}, \code{Remarks},
+\code{check_reverse}, \code{sheet}, \code{convert_status}, \code{convert_error}. The input
+for \code{\link[=check_relevancy_rules]{check_relevancy_rules()}}.
 }
 \description{
-Works with both Kobo and SurveyCTO XLSForms - column name differences
+Walks an XLSForm and produces a data frame describing each relevance rule
+together with the R expression to evaluate against a dataset. Works with
+both Kobo and SurveyCTO XLSForms - column name differences
 (\code{relevant}/\code{relevance}) are normalized internally.
+}
+\details{
+Each row gets a \code{convert_status} column:
+\itemize{
+\item \code{"ok"} - rule converted to a parseable R expression.
+\item \code{"unsupported_function"} - rule uses an XPath function the
+converter doesn't translate (e.g. \code{count-selected}, \code{if}, \code{regex},
+\code{coalesce}, \code{pulldata}, date helpers). \code{Rcondition} is \code{NA}.
+\item \code{"unsupported_operator"} - rule uses \code{div}/\code{mod}. \code{Rcondition} is
+\code{NA}.
+\item \code{"parse_error"} - converter produced a string but R could not
+parse it. \code{convert_error} carries the R parse-error message.
+\item \code{"empty"} - rule is blank.
+}
+\code{\link[=check_relevancy_rules]{check_relevancy_rules()}} skips every row where \code{convert_status} is not
+\code{"ok"}.
 }
