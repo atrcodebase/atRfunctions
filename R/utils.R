@@ -74,6 +74,41 @@ NULL
   label
 }
 
+# Convert an arbitrary string (typically a choice label coming from an
+# XLSForm) into a fragment that is safe to use inside an R variable name.
+#
+# Rules:
+#   - Replace anything outside [A-Za-z0-9_.] with `_` (so `/`, `'`, `(`,
+#     `&`, whitespace, etc. all become `_`).
+#   - Collapse runs of underscores into a single `_`.
+#   - Strip leading/trailing underscores and dots.
+#   - If the result is empty, return `"x"`.
+#   - If the result starts with a digit or a dot followed by a digit,
+#     prefix with `"x"` so the final name is a syntactically valid R
+#     identifier.
+#
+# The trailing column name produced by build_sm_label_map() looks like
+# `question/<this fragment>`. The `/` separator is intentional and remains
+# - it is what distinguishes the question prefix from the choice label -
+# so it is preserved by the caller, not stripped here.
+.sanitize_r_name <- function(s) {
+  s <- as.character(s)
+  # First, *drop* "ignorable" punctuation - apostrophes, quotes, backticks
+  # (incl. typographic / smart variants). These read better elided than
+  # replaced with underscore: "won't" -> "wont", not "won_t". The \u
+  # escapes cover U+2018 / U+2019 (curly single quotes) and U+201C /
+  # U+201D (curly double quotes); written as escapes so this file stays
+  # pure ASCII.
+  s <- gsub("['\"`\u2018\u2019\u201c\u201d]+", "", s, perl = TRUE)
+  # Then everything else that isn't alnum/underscore/dot -> underscore.
+  s <- gsub("[^A-Za-z0-9_.]+", "_", s, perl = TRUE)
+  s <- gsub("_+", "_", s, perl = TRUE)
+  s <- gsub("^[_.]+|[_.]+$", "", s, perl = TRUE)
+  s <- ifelse(s == "" | is.na(s), "x", s)
+  s <- ifelse(grepl("^[0-9]", s), paste0("x", s), s)
+  s
+}
+
 # Polymorphic `tool` resolver. Accepts any of:
 #   - a file path to an XLSForm xlsx     -> reads both sheets via read_xlsform()
 #   - a read_xlsform() result list       -> used as-is

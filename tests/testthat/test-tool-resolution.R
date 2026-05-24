@@ -123,12 +123,12 @@ test_that("check_select_multiple accepts list, df, and path", {
   expect_equal(nrow(via_path), nrow(via_df))
 })
 
-test_that("reshape_tool accepts list (already supported) and path", {
+test_that("build_sm_label_map accepts list (already supported) and path", {
   skip_if_no_writexl()
   path <- setup_xlsform("kobo")
   xform <- read_xlsform(path)
-  via_path <- reshape_tool(path, choice_label = "label:English")
-  via_list <- reshape_tool(xform, choice_label = "label:English")
+  via_path <- build_sm_label_map(path, choice_label = "label:English")
+  via_list <- build_sm_label_map(xform, choice_label = "label:English")
   expect_equal(via_path, via_list)
 })
 

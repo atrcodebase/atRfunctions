@@ -1,3 +1,38 @@
+# atRfunctions 0.0.5
+
+## Renamed: `reshape_tool` -> `build_sm_label_map`, `apply_SM_Label` -> `apply_sm_label_map`
+
+The old names were misleading or inconsistent. The new pair is descriptive and uses the package's lowercase-with-underscores convention. The old names continue to work as deprecated wrappers (one-shot warning per call) so existing scripts keep running.
+
+## Sanitized labels in `build_sm_label_map`
+
+The previous `reshape_tool` only replaced spaces with underscores when building `response_label_new`. Choice labels containing `/`, `'`, `(`, `&`, `%`, leading digits, etc. were left intact, producing column names that were either not valid R identifiers (`fruits/100%`) or hard to read (`fruits/Apple/Banana` - which `/` is the separator?). `build_sm_label_map()` now sanitizes the label fragment via a new internal `.sanitize_r_name()`:
+
+- non-`[A-Za-z0-9_.]` characters become `_`
+- runs of `_` collapse
+- leading/trailing `_`/`.` are stripped
+- leading digit gets `x` prefix
+
+Example transformations: `"Apple/Banana"` -> `"Apple_Banana"`, `"won't"` -> `"wont"`, `"100%"` -> `"x100"`, `"Apple (red)"` -> `"Apple_red"`. The `/` separator between the question prefix and the label fragment is preserved as before.
+
+## `apply_sm_label_map` accepts an XLSForm directly
+
+`apply_sm_label_map(data, x, ...)` is polymorphic in `x`:
+
+- If `x` is a mapping data frame (has `dataset_col` and `labeled_col` columns), apply it.
+- Otherwise treat `x` as an XLSForm (path / `read_xlsform()` result / survey data frame) and call `build_sm_label_map()` internally with the supplied `choice_label` / `tool_flavor`.
+
+So both workflows work:
+
+```r
+# explicit two-step
+mapping <- build_sm_label_map(xform)
+data    <- apply_sm_label_map(data, mapping)
+
+# one-shot
+data <- apply_sm_label_map(data, xform)
+```
+
 # atRfunctions 0.0.4
 
 ## Uniform `tool` argument
