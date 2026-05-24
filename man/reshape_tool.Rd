@@ -8,6 +8,7 @@ reshape_tool(
   tool,
   excluded_cols = "",
   choice_label = NULL,
+  sm_label_separator = ".",
   tool_flavor = "auto"
 )
 }
@@ -21,6 +22,10 @@ pre-read \code{read_xlsform()} result.}
 choice label. If \code{NULL} (default), the function tries the typical
 XLSForm forms (\code{label::English}, \code{label:English}, \code{label}) and picks
 the first one present.}
+
+\item{sm_label_separator}{Separator placed between the question name and
+the sanitized choice label in \code{labeled_col}. Default \code{"."} (produces
+valid R names like \code{fruits.Apple}).}
 
 \item{tool_flavor}{One of \code{"auto"}, \code{"kobo"}, \code{"surveycto"}. Only used
 when \code{tool} is a file path. Default \code{"auto"}.}

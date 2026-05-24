@@ -19,6 +19,9 @@
 #'   presence of `dataset_col`/`labeled_col` columns.
 #' @param question_separator Separator between question name and choice
 #'   code in the dataset columns. Default `"_"`.
+#' @param sm_label_separator Forwarded to [build_sm_label_map()] when `x`
+#'   is an XLSForm. Default `"."`. Ignored when `x` is a pre-built mapping
+#'   (the mapping already encodes its own separator).
 #' @param excluded_cols Columns to leave untouched (only meaningful when
 #'   `x` is a mapping; when `x` is an XLSForm, the same vector is passed
 #'   through to [build_sm_label_map()]).
@@ -31,6 +34,7 @@
 #' @export
 apply_sm_label_map <- function(data, x,
                                question_separator = "_",
+                               sm_label_separator = ".",
                                excluded_cols = "",
                                choice_label = NULL,
                                tool_flavor = "auto") {
@@ -39,7 +43,9 @@ apply_sm_label_map <- function(data, x,
     x
   } else {
     build_sm_label_map(x, excluded_cols = excluded_cols,
-                       choice_label = choice_label, tool_flavor = tool_flavor)
+                       choice_label = choice_label,
+                       sm_label_separator = sm_label_separator,
+                       tool_flavor = tool_flavor)
   }
 
   sm_cols <- unique(mapping$Question)

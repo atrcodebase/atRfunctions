@@ -1,3 +1,25 @@
+# atRfunctions 0.0.6
+
+## New: `apply_column_labels()`
+
+A general column-labeling function that renames data columns using the labels from the XLSForm `survey` sheet. Handles every question type, not just `select_multiple`:
+
+- Plain questions (text, integer, select_one, etc.) are renamed to the sanitized survey label (e.g. `consent` -> `Do_you_consent`).
+- `select_multiple` series columns are renamed using the **labeled** parent name as prefix, so series cols stay prefix-paired with the renamed parent (e.g. `fruits_1` -> `Pick_fruits.Apple` when `fruits` itself is labeled `"Pick fruits"`).
+- Columns not present in the XLSForm can be renamed via an optional `custom_labels` argument - useful for calculated / derived variables added after data collection. Accepts a named character vector, a named list, or a `data.frame(name, label)`. Priority: `custom_labels` > select_multiple choice labels > survey label.
+
+```r
+data <- apply_column_labels(
+  data, xform,
+  custom_labels = c(age_bracket  = "Age bracket",
+                    is_eligible  = "Is eligible?")
+)
+```
+
+## `sm_label_separator` argument
+
+`build_sm_label_map()` and `apply_sm_label_map()` now take an `sm_label_separator` argument (default `"."`) controlling the separator between the question name and the choice label in the generated `labeled_col`. The previous behavior (separator `"/"`) is recoverable by passing `sm_label_separator = "/"`. The new default produces valid R names without backticks (`data$fruits.Apple` vs `` data$`fruits/Apple` ``).
+
 # atRfunctions 0.0.5
 
 ## Renamed: `reshape_tool` -> `build_sm_label_map`, `apply_SM_Label` -> `apply_sm_label_map`

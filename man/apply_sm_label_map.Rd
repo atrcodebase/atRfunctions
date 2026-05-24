@@ -8,6 +8,7 @@ apply_sm_label_map(
   data,
   x,
   question_separator = "_",
+  sm_label_separator = ".",
   excluded_cols = "",
   choice_label = NULL,
   tool_flavor = "auto"
@@ -23,6 +24,10 @@ presence of \code{dataset_col}/\code{labeled_col} columns.}
 
 \item{question_separator}{Separator between question name and choice
 code in the dataset columns. Default \code{"_"}.}
+
+\item{sm_label_separator}{Forwarded to \code{\link[=build_sm_label_map]{build_sm_label_map()}} when \code{x}
+is an XLSForm. Default \code{"."}. Ignored when \code{x} is a pre-built mapping
+(the mapping already encodes its own separator).}
 
 \item{excluded_cols}{Columns to leave untouched (only meaningful when
 \code{x} is a mapping; when \code{x} is an XLSForm, the same vector is passed

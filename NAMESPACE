@@ -2,6 +2,7 @@
 
 export(add_repeat_sheet_names_to_questions)
 export(apply_SM_Label)
+export(apply_column_labels)
 export(apply_log)
 export(apply_sm_label_map)
 export(build_sm_label_map)

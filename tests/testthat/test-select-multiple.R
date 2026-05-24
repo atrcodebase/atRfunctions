@@ -52,7 +52,7 @@ test_that("build_sm_label_map produces a dataset_col -> labeled_col mapping", {
                     "dataset_col", "labeled_col") %in% names(out)))
   expect_setequal(unique(out$Question), "fruits")
   expect_setequal(out$dataset_col, c("fruits_1", "fruits_2", "fruits_3"))
-  expect_true(all(grepl("^fruits/", out$labeled_col)))
+  expect_true(all(grepl("^fruits.", out$labeled_col)))
 })
 
 test_that("build_sm_label_map works for surveycto flavor with auto label-column detection", {
@@ -62,7 +62,7 @@ test_that("build_sm_label_map works for surveycto flavor with auto label-column 
 
   out <- build_sm_label_map(path)
   expect_setequal(out$dataset_col, c("fruits_1", "fruits_2", "fruits_3"))
-  expect_true(all(grepl("^fruits/", out$labeled_col)))
+  expect_true(all(grepl("^fruits.", out$labeled_col)))
 })
 
 test_that("apply_sm_label_map renames columns using a pre-built mapping", {
@@ -76,12 +76,12 @@ test_that("apply_sm_label_map renames columns using a pre-built mapping", {
   out <- apply_sm_label_map(data, mapping)
 
   expect_false("fruits_1" %in% names(out))
-  expect_true("fruits/Apple"  %in% names(out))
-  expect_true("fruits/Banana" %in% names(out))
-  expect_true("fruits/Cherry" %in% names(out))
-  expect_equal(out$`fruits/Apple`,  c(1, 0, 0))
-  expect_equal(out$`fruits/Banana`, c(0, 0, 1))
-  expect_equal(out$`fruits/Cherry`, c(1, 0, 0))
+  expect_true("fruits.Apple"  %in% names(out))
+  expect_true("fruits.Banana" %in% names(out))
+  expect_true("fruits.Cherry" %in% names(out))
+  expect_equal(out$`fruits.Apple`,  c(1, 0, 0))
+  expect_equal(out$`fruits.Banana`, c(0, 0, 1))
+  expect_equal(out$`fruits.Cherry`, c(1, 0, 0))
 })
 
 test_that("apply_sm_label_map also accepts an XLSForm directly (no map needed)", {
@@ -92,9 +92,9 @@ test_that("apply_sm_label_map also accepts an XLSForm directly (no map needed)",
   data$fruits_1 <- c(1, 0, 0); data$fruits_2 <- c(0, 0, 1); data$fruits_3 <- c(1, 0, 0)
 
   out <- apply_sm_label_map(data, path, choice_label = "label:English")
-  expect_true("fruits/Apple"  %in% names(out))
-  expect_true("fruits/Banana" %in% names(out))
-  expect_true("fruits/Cherry" %in% names(out))
+  expect_true("fruits.Apple"  %in% names(out))
+  expect_true("fruits.Banana" %in% names(out))
+  expect_true("fruits.Cherry" %in% names(out))
 
   # Same result via read_xlsform() list
   xform <- read_xlsform(path)
@@ -126,19 +126,19 @@ test_that("build_sm_label_map sanitizes choice labels for valid R names", {
 
   mapping <- build_sm_label_map(path)
 
-  # Every labeled_col must be reachable as a normal R name with no metachars
-  # beyond the intentional `/` separator.
-  fragments <- sub("^q/", "", mapping$labeled_col)
+  # Every labeled_col must be reachable as a normal R name. The `.`
+  # separator is itself a valid R identifier character.
+  fragments <- sub("^q\\.", "", mapping$labeled_col)
   expect_true(all(grepl("^[A-Za-z_][A-Za-z0-9_.]*$", fragments)),
               info = paste("got:", paste(fragments, collapse = ", ")))
 
   # Spot-checks of specific transformations
-  expect_true("q/Apple_Banana"  %in% mapping$labeled_col)
-  expect_true("q/wont"          %in% mapping$labeled_col)
-  expect_true("q/Mr._Mrs"       %in% mapping$labeled_col)
-  expect_true("q/x100"          %in% mapping$labeled_col)
-  expect_true("q/Apple_red"     %in% mapping$labeled_col)
-  expect_true("q/trailing"      %in% mapping$labeled_col)
+  expect_true("q.Apple_Banana"  %in% mapping$labeled_col)
+  expect_true("q.wont"          %in% mapping$labeled_col)
+  expect_true("q.Mr._Mrs"       %in% mapping$labeled_col)
+  expect_true("q.x100"          %in% mapping$labeled_col)
+  expect_true("q.Apple_red"     %in% mapping$labeled_col)
+  expect_true("q.trailing"      %in% mapping$labeled_col)
 })
 
 test_that(".sanitize_r_name covers the corner cases", {
@@ -164,7 +164,7 @@ test_that("reshape_tool() works as a deprecated alias", {
   write_fixture_xlsform(path, "kobo")
   expect_warning(out <- reshape_tool(path, choice_label = "label:English"),
                  "deprecated")
-  expect_true("fruits/Apple" %in% out$labeled_col)
+  expect_true("fruits.Apple" %in% out$labeled_col)
 })
 
 test_that("apply_SM_Label() works as a deprecated alias", {
@@ -176,5 +176,5 @@ test_that("apply_SM_Label() works as a deprecated alias", {
 
   mapping <- build_sm_label_map(path, choice_label = "label:English")
   expect_warning(out <- apply_SM_Label(data, mapping), "deprecated")
-  expect_true("fruits/Apple" %in% names(out))
+  expect_true("fruits.Apple" %in% names(out))
 })

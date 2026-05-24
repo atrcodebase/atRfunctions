@@ -15,16 +15,21 @@
 #'   choice label. If `NULL` (default), the function tries the typical
 #'   XLSForm forms (`label::English`, `label:English`, `label`) and picks
 #'   the first one present.
+#' @param sm_label_separator Separator placed between the question name and
+#'   the sanitized choice label in `labeled_col`. Default `"."` (produces
+#'   valid R names like `fruits.Apple`).
 #' @param tool_flavor One of `"auto"`, `"kobo"`, `"surveycto"`. Only used
 #'   when `tool` is a file path. Default `"auto"`.
 #'
 #' @return Data frame with columns `Question`, `type`, `select_type`,
 #'   `response_code`, `response_label`, `response_label_new`, `dataset_col`,
-#'   `labeled_col`. `labeled_col` is `"<Question>/<sanitized_label>"`.
+#'   `labeled_col`. `labeled_col` is
+#'   `"<Question><sm_label_separator><sanitized_label>"`.
 #' @import dplyr
 #' @import stringr
 #' @export
 build_sm_label_map <- function(tool, excluded_cols = "", choice_label = NULL,
+                               sm_label_separator = ".",
                                tool_flavor = "auto") {
   xlsform <- .resolve_tool(tool, tool_flavor = tool_flavor, needs_choices = TRUE)
   tool_survey  <- xlsform$survey
@@ -65,7 +70,7 @@ build_sm_label_map <- function(tool, excluded_cols = "", choice_label = NULL,
     filter(!is.na(response_code) & !is.na(response_label)) %>%
     mutate(
       dataset_col = paste0(Question, "_", response_code),
-      labeled_col = paste0(Question, "/", response_label_new)
+      labeled_col = paste0(Question, sm_label_separator, response_label_new)
     )
 }
 
@@ -96,9 +101,12 @@ build_sm_label_map <- function(tool, excluded_cols = "", choice_label = NULL,
 #' @return Same as [build_sm_label_map()].
 #' @export
 reshape_tool <- function(tool, excluded_cols = "", choice_label = NULL,
+                         sm_label_separator = ".",
                          tool_flavor = "auto") {
   warning("`reshape_tool()` is deprecated; use `build_sm_label_map()` instead.",
           call. = FALSE)
   build_sm_label_map(tool, excluded_cols = excluded_cols,
-                     choice_label = choice_label, tool_flavor = tool_flavor)
+                     choice_label = choice_label,
+                     sm_label_separator = sm_label_separator,
+                     tool_flavor = tool_flavor)
 }
