@@ -4,6 +4,12 @@
 
 - `read_xlsform()` — a single helper that reads an XLSForm's `survey` and `choices` sheets and normalizes column-name differences between Kobo and SurveyCTO (`relevant`/`relevance`, `list_name`/`list name`, `name`/`value`). Used internally by every function that ingests an XLSForm.
 - New `tool_flavor` argument (`"auto"`, `"kobo"`, `"surveycto"`) on `labeler()`, `concat_url()`, `update_media_links()`. Default is `"auto"` — the flavor is detected from the XLSForm's columns. Users who want to be explicit can pass `tool_flavor = "kobo"` or `tool_flavor = "surveycto"`.
+- `reshape_tool()` — reads an XLSForm and returns a mapping from raw `select_multiple` series columns (e.g. `q1_3`) to labeled equivalents (e.g. `q1/Banana`). Auto-detects the label column when not supplied; works with both XLSForm flavors. Ported from `atRpipeline`.
+- `apply_SM_Label()` — renames `select_multiple` series columns in a dataset using the mapping from `reshape_tool()`. Ported from `atRpipeline`.
+
+## Improved
+
+- `check_select_multiple()` now accepts either a file path (XLSForm) or a pre-read `survey` data frame. When passed a path, it uses `read_xlsform()` so both flavors work. Gained an `excluded_col` argument and a `tool_flavor` argument; switched `print()` to `message()` for the "no mismatches" notice.
 
 ## Argument standardization
 

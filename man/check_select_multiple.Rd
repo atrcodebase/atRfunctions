@@ -2,19 +2,37 @@
 % Please edit documentation in R/check_select_multiple.R
 \name{check_select_multiple}
 \alias{check_select_multiple}
-\title{Check Series Cols}
+\title{Check select_multiple series columns}
 \usage{
-check_select_multiple(data, tool, question_separator = "_", KEY = "KEY")
+check_select_multiple(
+  data,
+  tool,
+  question_separator = "_",
+  KEY = "KEY",
+  excluded_col = "",
+  tool_flavor = "auto"
+)
 }
 \arguments{
-\item{data}{dataframe}
+\item{data}{A data frame.}
 
-\item{tool}{The survey sheet of data collection tool}
+\item{tool}{Either a path to the XLSForm (Kobo or SurveyCTO) or a pre-read
+\code{survey}-sheet data frame.}
 
-\item{question_separator}{default value is '_'}
+\item{question_separator}{Separator between question name and choice code.
+Default \code{"_"}.}
 
-\item{KEY}{default value is 'KEY'}
+\item{KEY}{Column uniquely identifying rows. Default \code{"KEY"}.}
+
+\item{excluded_col}{Vector of column names to skip. Default \code{""}.}
+
+\item{tool_flavor}{One of \code{"auto"}, \code{"kobo"}, \code{"surveycto"}. Only used when
+\code{tool} is a file path. See \code{\link[=read_xlsform]{read_xlsform()}}. Default \code{"auto"}.}
+}
+\value{
+Data frame of inconsistency log rows.
 }
 \description{
-This function checks if the 'select_multiple' series column values (0s,1s) are based on responses in the main question.
+Verifies that the \code{select_multiple} series columns (0/1 dummies) are
+consistent with the responses in the main multi-response column.
 }
